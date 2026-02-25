@@ -10,9 +10,11 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --dusty-rose: #C18B8B;
-            --soft-rose: #E8D3D3;
-            --dark-rose: #8A5D5D;
+            --maroon-dark: #56131B;    /* Warna paling gelap di gambar */
+            --burgundy: #71142A;       /* Warna utama */
+            --bronze: #A77F60;         /* Warna aksen cokelat */
+            --champagne: #E3C8AE;      /* Warna background terang */
+            --soft-cream: #FDF8F2;     /* Warna dasar halaman */
             
         /* Animasi Khusus */
     .fade-up {
@@ -43,16 +45,18 @@
         z-index: 1;
     }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fdf8f8;
-            color: #4a4a4a;
-            overflow-x: hidden;
+            body { font-family: 'Inter', sans-serif; 
+                  background-color: var(--soft-cream); 
+                  color: #2D2D2D; overflow-x: hidden; 
         }
         .font-serif { font-family: 'Playfair Display', serif; }
         .font-accent { font-family: 'Great Vibes', cursive; }
-        .text-dusty-rose { color: var(--dusty-rose); }
-        .bg-dusty-rose { background-color: var(--dusty-rose); }
-        .border-dusty-rose { border-color: var(--dusty-rose); }
+        /* Utility Classes Baru */
+        .text-burgundy { color: var(--burgundy); }
+        .bg-maroon { background-color: var(--maroon-dark); }
+        .bg-burgundy { background-color: var(--burgundy); }
+        .border-bronze { border-color: var(--bronze); }
+        .bg-champagne { background-color: var(--champagne); }
         
         .fade-in-section {
             opacity: 0;
@@ -80,8 +84,8 @@
         <source src="musik.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="music-control" class="fixed flex items-center justify-center w-12 h-12 bg-white rounded-full shadow-lg border border-dusty-rose cursor-pointer animate-bounce">
-        <i data-lucide="music" class="text-dusty-rose w-6 h-6"></i>
+    <div id="music-control" class="fixed flex items-center justify-center w-12 h-12 bg-white rounded-full shadow-lg border border-bronze cursor-pointer animate-bounce">
+        <i data-lucide="music" class="text-burgundy w-6 h-6"></i>
     </div>
 
     <section class="relative h-screen flex items-center justify-center overflow-hidden">
@@ -421,6 +425,7 @@ document.querySelectorAll('.fade-up, .zoom-in, .fade-in-section').forEach(el => 
     </script>
 </body>
 </html>
+
 
 
 
