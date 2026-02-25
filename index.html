@@ -119,7 +119,7 @@
         </p>
     </section>
     
-    <section id="cerita" class="py-20 bg-soft-rose/30 overflow-hidden">
+    <section id="cerita" class="py-20 bg-champagne/20 overflow-hidden">
     <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-around gap-12 text-center">
         <div class="fade-up"> 
             <div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white shadow-xl mx-auto mb-6">
@@ -141,7 +141,7 @@
     </div>
 </section>
 
-    <section class="py-20 bg-dusty-rose text-white text-center">
+    <section class="py-20 bg-maroon text-white text-center">
         <div class="max-w-4xl mx-auto px-6">
             <h2 class="font-serif text-2xl mb-10 tracking-widest uppercase">Menghitung Hari</h2>
             <div class="grid grid-cols-4 gap-4 md:gap-8" id="countdown">
@@ -324,7 +324,7 @@
                 messages.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
 
                 guestbook.innerHTML = messages.map(msg => `
-                    <div class="p-4 bg-soft-rose/20 rounded-xl border border-soft-rose text-left">
+                    <div class="p-4 bg-champagne/20 rounded-xl border border-soft-rose text-left">
                         <div class="flex justify-between items-center mb-1">
                             <span class="font-bold text-dark-rose text-sm">${msg.name}</span>
                             <span class="text-[10px] px-2 py-0.5 bg-white rounded-full border">${msg.attendance}</span>
@@ -425,6 +425,7 @@ document.querySelectorAll('.fade-up, .zoom-in, .fade-in-section').forEach(el => 
     </script>
 </body>
 </html>
+
 
 
 
