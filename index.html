@@ -65,10 +65,10 @@
             <h1 class="font-serif text-5xl md:text-8xl font-bold mb-6 animate__animated animate__zoomIn">Alfarizi & Melinda</h1>
             <p class="text-lg md:text-2xl tracking-[0.2em] uppercase font-light animate__animated animate__fadeInUp">02 . 10 . 2026</p>
             <div class="mt-12">
-                <a href="#cerita" class="px-8 py-3 border border-white hover:bg-white hover:text-dusty-rose transition-all duration-300 rounded-full inline-flex items-center gap-2">
+                <a href="#cerita" id="btn-buka" class="px-8 py-3 border border-white hover:bg-white hover:text-dusty-rose transition-all rounded-full inline-flex items-center gap-2">
                     Buka Undangan <i data-lucide="chevron-down" class="w-4 h-4"></i>
                 </a>
-            </div>
+             </div>
         </div>
     </section>
 
@@ -336,14 +336,40 @@
         });
 
         // Music
-        const music = document.getElementById('bg-music');
-        const mBtn = document.getElementById('music-control');
-        let playing = false;
-        mBtn.onclick = () => {
-            playing ? music.pause() : music.play();
-            mBtn.classList.toggle('animate-spin');
-            playing = !playing;
-        };
+        lucide.createIcons();
+    const music = document.getElementById('bg-music');
+    const mBtn = document.getElementById('music-control');
+    const btnBuka = document.getElementById('btn-buka');
+    let playing = false;
+
+    // Fungsi untuk memutar musik
+    function playMusic() {
+        music.play();
+        mBtn.classList.add('animate-spin');
+        playing = true;
+    }
+
+    // Fitur Autoplay: Musik berputar saat tombol "Buka Undangan" diklik
+    btnBuka.onclick = () => {
+        playMusic();
+    };
+
+    // Tombol kontrol manual (on/off)
+    mBtn.onclick = () => {
+        if (playing) {
+            music.pause();
+            mBtn.classList.remove('animate-spin');
+        } else {
+            playMusic();
+        }
+        playing = !playing;
+    };
+
+    // Animasi muncul saat scroll
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => e.isIntersecting && e.target.classList.add('is-visible'));
+    });
+    document.querySelectorAll('.fade-in-section').forEach(s => obs.observe(s));
 
         // Countdown
         const target = new Date("October 2, 2026 07:00:00").getTime();
@@ -364,4 +390,5 @@
     </script>
 </body>
 </html>
+
 
