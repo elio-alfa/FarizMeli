@@ -66,6 +66,10 @@
         }
     </style>
 </head>
+	<!-- Toast Notification -->
+<div id="toast" class="fixed top-6 right-6 translate-x-40 opacity-0 transition-all duration-500 bg-dark-rose text-white px-6 py-3 rounded-xl shadow-lg text-sm font-medium z-50">
+    Berhasil disalin
+</div>
 <body>
 
     <!-- Audio Placeholder -->
@@ -287,21 +291,41 @@
         </div>
     </section>
 <script>
-    // Copy to Clipboard Function
+document.addEventListener("DOMContentLoaded", function() {
+
+    const toast = document.getElementById("toast");
+
+    function showToast(message) {
+        toast.textContent = message;
+
+        // Show
+        toast.classList.remove("translate-x-40", "opacity-0");
+        toast.classList.add("translate-x-0", "opacity-100");
+
+        // Hide after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove("translate-x-0", "opacity-100");
+            toast.classList.add("translate-x-40", "opacity-0");
+        }, 3000);
+    }
+
     document.querySelectorAll('.copy-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            const rekening = button.getAttribute('data-rekening');
+        button.addEventListener('click', function() {
+
+            const rekening = this.getAttribute('data-rekening');
 
             navigator.clipboard.writeText(rekening)
                 .then(() => {
-                    alert("Berhasil disalin");
+                    showToast("Nomor rekening berhasil disalin ✨");
                 })
-                .catch(err => {
-                    console.error("Gagal menyalin:", err);
-                    alert("Gagal menyalin nomor rekening");
+                .catch(() => {
+                    showToast("Gagal menyalin nomor rekening");
                 });
+
         });
     });
+
+});
 </script>
     <!-- Footer -->
     <footer class="py-12 bg-white text-center text-gray-400 text-sm">
@@ -509,6 +533,7 @@
 </body>
 
 </html>
+
 
 
 
