@@ -69,8 +69,15 @@
 <body>
 
 	<!-- Toast Notification -->
-<div id="toast" class="fixed top-6 right-6 translate-x-40 opacity-0 transition-all duration-500 bg-dusty-rose text-white px-6 py-3 rounded-xl shadow-lg text-sm font-medium z-50">
-    Berhasil disalin
+<div id="toast"
+	class="fixed bottom-8 left-1/2 -translate-x-1/2 translate-y-20 opacity-0
+	transition-all duration-500 ease-out
+	bg-white/95 backdrop-blur-md
+	text-gray-800
+	px-6 py-4 rounded-2xl
+	shadow-2xl text-sm font-medium
+	z-50 border border-gray-200
+	min-w-[250px] text-center">
 </div>
 	
     <!-- Audio Placeholder -->
@@ -292,44 +299,40 @@
         </div>
     </section>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+function showToast(message, type = "success") {
 
     const toast = document.getElementById("toast");
 
-    function showToast(message) {
+    let icon = "✔";
+    let iconColor = "text-green-500";
+
+    if (type === "error") {
+        icon = "✖";
+        iconColor = "text-red-500";
+    }
+
+    if (type === "loading") {
+        icon = "⏳";
+        iconColor = "text-amber-500";
+    }
+
     toast.innerHTML = `
-        <div class="flex items-center gap-2">
-            <span class="text-green-500 text-lg">✔</span>
+        <div class="flex items-center justify-center gap-2">
+            <span class="${iconColor} text-lg">${icon}</span>
             <span>${message}</span>
         </div>
     `;
 
-    toast.classList.remove("translate-x-40", "opacity-0");
-    toast.classList.add("translate-x-0", "opacity-100");
+    // Muncul
+    toast.classList.remove("translate-y-20", "opacity-0");
+    toast.classList.add("translate-y-0", "opacity-100");
 
+    // Hilang otomatis
     setTimeout(() => {
-        toast.classList.remove("translate-x-0", "opacity-100");
-        toast.classList.add("translate-x-40", "opacity-0");
+        toast.classList.remove("translate-y-0", "opacity-100");
+        toast.classList.add("translate-y-20", "opacity-0");
     }, 3000);
 }
-
-    document.querySelectorAll('.copy-btn').forEach(button => {
-        button.addEventListener('click', function() {
-
-            const rekening = this.getAttribute('data-rekening');
-
-            navigator.clipboard.writeText(rekening)
-                .then(() => {
-                    showToast("Nomor rekening berhasil disalin ✨");
-                })
-                .catch(() => {
-                    showToast("Gagal menyalin nomor rekening");
-                });
-
-        });
-    });
-
-});
 </script>
     <!-- Footer -->
     <footer class="py-12 bg-white text-center text-gray-400 text-sm">
@@ -539,6 +542,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </body>
 
 </html>
+
 
 
 
