@@ -235,9 +235,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Konfigurasi Firebase Anda
         const firebaseConfig = {
             apiKey: "AIzaSyAo7yQJpGdgfYnou6NidFpsu1TqRq6CITk",
             authDomain: "website-undangan-951ce.firebaseapp.com",
@@ -251,117 +250,117 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const rsvpForm = document.getElementById('rsvp-form');
+
         let currentUser = null;
 
-        // Auth & Load Messages
+        // Auth
         signInAnonymously(auth).catch(err => console.error("Auth failed", err));
-        onAuthStateChanged(auth, (user) => { 
-            if (user) { 
-                currentUser = user; 
-                const gb = document.getElementById('guestbook');
-                onSnapshot(collection(db, "rsvp_messages"), (snap) => {
-                    let msgs = [];
-                    snap.forEach(doc => msgs.push(doc.data()));
-                    msgs.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
-                    gb.innerHTML = msgs.map(m => `
-                        <div class="p-4 bg-soft-rose/20 rounded-xl border border-soft-rose text-left mb-4">
-                            <div class="flex justify-between mb-1">
-                                <span class="font-bold text-dark-rose text-sm">${m.name}</span>
-                                <span class="text-[10px] px-2 py-0.5 bg-white rounded-full border">${m.attendance}</span>
-                            </div>
-                            <p class="text-xs text-gray-600 italic">"${m.message}"</p>
-                        </div>
-                    `).join('');
-                });
-            } 
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                loadMessages();
+            }
         });
 
-        // RSVP Form Handler
-        document.getElementById('rsvp-form').addEventListener('submit', async (e) => {
+        // Load Messages
+        function loadMessages() {
+            const q = collection(db, "rsvp_messages");
+            onSnapshot(q, (snapshot) => {
+                const guestbook = document.getElementById('guestbook');
+                let messages = [];
+                snapshot.forEach(doc => messages.push(doc.data()));
+                
+                // Sort by time
+                messages.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+
+                guestbook.innerHTML = messages.map(msg => `
+                    <div class="p-4 bg-soft-rose/20 rounded-xl border border-soft-rose text-left">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-dark-rose text-sm">${msg.name}</span>
+                            <span class="text-[10px] px-2 py-0.5 bg-white rounded-full border">${msg.attendance}</span>
+                        </div>
+                        <p class="text-xs text-gray-600 italic">"${msg.message}"</p>
+                    </div>
+                `).join('');
+            });
+        }
+
+        // Form Submit
+        rsvpForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('rsvp-submit');
-            if (!currentUser) return;
-            btn.disabled = true; btn.innerText = "Mengirim...";
+            const submitBtn = document.getElementById('rsvp-submit');
+            
+            if (!currentUser) return showToast("Menghubungkan...", "loading");
+
+            const data = {
+                name: document.getElementById('rsvp-name').value,
+                attendance: document.getElementById('rsvp-attendance').value,
+                message: document.getElementById('rsvp-message').value,
+                timestamp: serverTimestamp()
+            };
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Mengirim...";
+
             try {
-                await addDoc(collection(db, "rsvp_messages"), {
-                    name: document.getElementById('rsvp-name').value,
-                    attendance: document.getElementById('rsvp-attendance').value,
-                    message: document.getElementById('rsvp-message').value,
-                    timestamp: serverTimestamp()
-                });
-                document.getElementById('rsvp-form').reset();
-                window.showToast("Terkirim! 💌");
-            } catch (err) { alert("Gagal mengirim pesan."); }
-            finally { btn.disabled = false; btn.innerText = "Kirim Pesan"; }
+                await addDoc(collection(db, "rsvp_messages"), data);
+                showToast("Pesan Terkirim! 💌");
+                rsvpForm.reset();
+            } catch (err) {
+                showToast("Gagal mengirim", "error");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Kirim Pesan";
+            }
         });
     </script>
 
     <script>
-        // Global Functions & UI Logic
         lucide.createIcons();
-        
-        const music = document.getElementById('bg-music');
-        const mBtn = document.getElementById('music-control');
-        const btnBuka = document.getElementById('btn-buka');
-        let playing = false;
 
-        // Toast Function
-        window.showToast = (msg) => {
+        function showToast(msg, type = "success") {
             const t = document.getElementById('toast');
-            t.innerText = msg; 
+            t.innerText = msg;
             t.classList.remove('translate-y-20', 'opacity-0');
             setTimeout(() => t.classList.add('translate-y-20', 'opacity-0'), 3000);
-        };
-
-        // Music Control
-        function toggleMusic() {
-            if (playing) {
-                music.pause();
-                mBtn.classList.remove('animate-spin');
-            } else {
-                music.play().catch(e => console.log("Playback blocked"));
-                mBtn.classList.add('animate-spin');
-            }
-            playing = !playing;
         }
 
-        // Buka Undangan Click
-        btnBuka.onclick = () => {
-            if (!playing) toggleMusic();
+        // Copy logic
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                navigator.clipboard.writeText(btn.dataset.rekening);
+                showToast("Nomor rekening disalin!");
+            });
+        });
+
+        // Music
+        const music = document.getElementById('bg-music');
+        const mBtn = document.getElementById('music-control');
+        let playing = false;
+        mBtn.onclick = () => {
+            playing ? music.pause() : music.play();
+            mBtn.classList.toggle('animate-spin');
+            playing = !playing;
         };
 
-        mBtn.onclick = toggleMusic;
-
         // Countdown
-        const targetDate = new Date("October 2, 2026 07:00:00").getTime();
-        const countdownTimer = setInterval(() => {
+        const target = new Date("October 2, 2026 07:00:00").getTime();
+        setInterval(() => {
             const now = new Date().getTime();
-            const diff = targetDate - now;
-
-            if (diff < 0) {
-                clearInterval(countdownTimer);
-                return;
-            }
-
+            const diff = target - now;
             document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
             document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             document.getElementById('minutes').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             document.getElementById('seconds').innerText = Math.floor((diff % (1000 * 60)) / 1000);
         }, 1000);
 
-        // Intersection Observer (Fade In Animation)
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in-section').forEach(section => {
-            observer.observe(section);
+        // Intersection Observer
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => e.isIntersecting && e.target.classList.add('is-visible'));
         });
+        document.querySelectorAll('.fade-in-section').forEach(s => obs.observe(s));
     </script>
 </body>
 </html>
