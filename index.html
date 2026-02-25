@@ -468,8 +468,11 @@ document.querySelectorAll(".copy-btn").forEach(button => {
                     message,
                     userId: currentUser.uid,
                     timestamp: serverTimestamp()
-                } showToast("Pesan berhasil dikirim 💌", "success");
-
+                });
+				
+				// ✅ Toast sukses
+				showToast("Pesan berhasil dikirim 💌", "success");
+				
                 submitBtn.innerHTML = "Terima Kasih!";
                 submitBtn.classList.replace('bg-dusty-rose', 'bg-green-500');
                 rsvpForm.reset();
@@ -481,10 +484,14 @@ document.querySelectorAll(".copy-btn").forEach(button => {
                 }, 3000);
             } catch (error) {
                 console.error("Error adding document: ", error);
+
+				// ✅ Toast error
+ 				showToast("Gagal mengirim pesan", "error");
+				
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = "Gagal, Coba Lagi";
             } 
-        } showToast("Gagal mengirim pesan", "error");
+        });
     </script>
 
     <script>
@@ -557,3 +564,4 @@ document.querySelectorAll(".copy-btn").forEach(button => {
 </body>
 
 </html>
+
