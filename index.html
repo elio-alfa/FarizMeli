@@ -9,23 +9,47 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        :root { --dusty-rose: #C18B8B; --soft-rose: #E8D3D3; --dark-rose: #8A5D5D; }
-        body { font-family: 'Inter', sans-serif; background-color: #fdf8f8; color: #4a4a4a; overflow-x: hidden; }
+        :root {
+            --dusty-rose: #C18B8B;
+            --soft-rose: #E8D3D3;
+            --dark-rose: #8A5D5D;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdf8f8;
+            color: #4a4a4a;
+            overflow-x: hidden;
+        }
         .font-serif { font-family: 'Playfair Display', serif; }
         .font-accent { font-family: 'Great Vibes', cursive; }
         .text-dusty-rose { color: var(--dusty-rose); }
         .bg-dusty-rose { background-color: var(--dusty-rose); }
-        .fade-in-section { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
-        .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
-        #music-control { bottom: 80px; left: 20px; z-index: 999; }
+        .border-dusty-rose { border-color: var(--dusty-rose); }
+        
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #music-control {
+            bottom: 80px;
+            left: 20px;
+            z-index: 999;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--dusty-rose); border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 translate-y-20 opacity-0 transition-all duration-500 bg-white/95 px-6 py-4 rounded-2xl shadow-2xl z-[9999] border border-gray-200 text-sm"></div>
+    <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 translate-y-20 opacity-0 transition-all duration-500 ease-out bg-white/95 backdrop-blur-md text-gray-800 px-6 py-4 rounded-2xl shadow-2xl text-sm font-medium z-[9999] border border-gray-200 min-w-[250px] text-center"></div>
 
     <audio id="bg-music" loop>
-        <source src="musik.mp3" type="audio/mpeg">
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
     </audio>
 
     <div id="music-control" class="fixed flex items-center justify-center w-12 h-12 bg-white rounded-full shadow-lg border border-dusty-rose cursor-pointer animate-bounce">
@@ -34,57 +58,118 @@
 
     <section class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <div class="w-full h-full bg-[url('galeri1.jpg')] bg-cover bg-center brightness-50"></div>
+            <div class="w-full h-full bg-[url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80')] bg-cover bg-center brightness-50"></div>
         </div>
         <div class="relative z-10 text-center text-white px-4">
-            <p class="font-accent text-3xl md:text-5xl mb-4">The Wedding of</p>
-            <h1 class="font-serif text-5xl md:text-8xl font-bold mb-6">Alfarizi & Melinda</h1>
-            <p class="text-lg md:text-2xl tracking-[0.2em] uppercase">02 . 10 . 2026</p>
+            <p class="font-accent text-3xl md:text-5xl mb-4 animate__animated animate__fadeInDown">The Wedding of</p>
+            <h1 class="font-serif text-5xl md:text-8xl font-bold mb-6 animate__animated animate__zoomIn">Alfarizi & Melinda</h1>
+            <p class="text-lg md:text-2xl tracking-[0.2em] uppercase font-light animate__animated animate__fadeInUp">02 . 10 . 2026</p>
             <div class="mt-12">
-                <a href="#cerita" class="px-8 py-3 border border-white hover:bg-white hover:text-dusty-rose transition-all rounded-full inline-flex items-center gap-2">
+                <a href="#cerita" class="px-8 py-3 border border-white hover:bg-white hover:text-dusty-rose transition-all duration-300 rounded-full inline-flex items-center gap-2">
                     Buka Undangan <i data-lucide="chevron-down" class="w-4 h-4"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-md px-6 py-3 rounded-full shadow-xl z-50 flex gap-8 border border-soft-rose">
-        <a href="#" class="text-dark-rose"><i data-lucide="home" class="w-5 h-5"></i></a>
-        <a href="#acara" class="text-dark-rose"><i data-lucide="calendar" class="w-5 h-5"></i></a>
-        <a href="#galeri" class="text-dark-rose"><i data-lucide="image" class="w-5 h-5"></i></a>
-        <a href="#rsvp" class="text-dark-rose"><i data-lucide="mail" class="w-5 h-5"></i></a>
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-md px-6 py-3 rounded-full shadow-xl border border-soft-rose z-50 flex gap-8">
+        <a href="#" class="text-dark-rose hover:scale-110 transition-transform"><i data-lucide="home" class="w-5 h-5"></i></a>
+        <a href="#acara" class="text-dark-rose hover:scale-110 transition-transform"><i data-lucide="calendar" class="w-5 h-5"></i></a>
+        <a href="#galeri" class="text-dark-rose hover:scale-110 transition-transform"><i data-lucide="image" class="w-5 h-5"></i></a>
+        <a href="#rsvp" class="text-dark-rose hover:scale-110 transition-transform"><i data-lucide="mail" class="w-5 h-5"></i></a>
     </nav>
 
+    <section id="cerita" class="py-20 px-6 max-w-4xl mx-auto text-center fade-in-section">
+        <i data-lucide="heart" class="mx-auto text-dusty-rose w-10 h-10 mb-6"></i>
+        <h2 class="font-serif text-3xl md:text-4xl text-dark-rose mb-8 italic">"Cerita cinta kami dimulai dari..."</h2>
+        <p class="leading-relaxed text-gray-600 italic">
+            "Pertemuan yang tidak disengaja menumbuhkan rasa yang tak terduga. Kami percaya bahwa setiap detik yang kami lalui adalah bagian dari rencana indah-Nya untuk menyatukan dua hati dalam ikatan suci pernikahan."
+        </p>
+    </section>
+
     <section class="py-20 bg-soft-rose/30">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-around gap-12 text-center">
-            <div class="fade-in-section">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-around gap-12">
+            <div class="text-center fade-in-section">
                 <div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white shadow-xl mx-auto mb-6">
-                    <img src="foto-pria.jpg" class="w-full h-full object-cover">
+                    <img src="https://drive.google.com/uc?export=download&id=1AwTREHXJ_y3ZMEUYL7VYtiUbAymdS3ff" alt="Alfarizi" class="w-full h-full object-cover">
                 </div>
-                <h3 class="font-serif text-3xl text-dark-rose">M. Nur Alfarizi</h3>
-                <p class="text-xs font-bold text-dusty-rose uppercase">Putra Bpk. Zamroji & Ibu Maidah</p>
+                <h3 class="font-serif text-3xl text-dark-rose mb-2">M. Nur Alfarizi</h3>
+                <p class="text-xs font-semibold tracking-widest text-dusty-rose uppercase">Putra dari Bpk. Zamroji & Ibu Maidah</p>
             </div>
             <div class="font-accent text-6xl text-dusty-rose">&</div>
-            <div class="fade-in-section">
+            <div class="text-center fade-in-section">
                 <div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white shadow-xl mx-auto mb-6">
-                    <img src="foto-wanita.jpg" class="w-full h-full object-cover">
+                    <img src="https://drive.google.com/uc?export=download&id=1vbckuIUB-0m0v-tPjBZ1yC1QIm0jZTW7" alt="Melinda" class="w-full h-full object-cover">
                 </div>
-                <h3 class="font-serif text-3xl text-dark-rose">Melinda Elfina R.</h3>
-                <p class="text-xs font-bold text-dusty-rose uppercase">Putri Bpk. Hasanuddin & Ibu Siti Khalimah</p>
+                <h3 class="font-serif text-3xl text-dark-rose mb-2">Melinda Elfina Rahmawaty</h3>
+                <p class="text-xs font-semibold tracking-widest text-dusty-rose uppercase">Putri dari Bpk. Hasanuddin & Ibu Siti Khalimah</p>
             </div>
         </div>
     </section>
 
-    <section id="galeri" class="py-20 px-6 bg-white">
+    <section class="py-20 bg-dusty-rose text-white text-center">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="font-serif text-2xl mb-10 tracking-widest uppercase">Menghitung Hari</h2>
+            <div class="grid grid-cols-4 gap-4 md:gap-8" id="countdown">
+                <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+                    <span id="days" class="block text-3xl md:text-5xl font-bold">00</span>
+                    <span class="text-[10px] uppercase">Hari</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+                    <span id="hours" class="block text-3xl md:text-5xl font-bold">00</span>
+                    <span class="text-[10px] uppercase">Jam</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+                    <span id="minutes" class="block text-3xl md:text-5xl font-bold">00</span>
+                    <span class="text-[10px] uppercase">Menit</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
+                    <span id="seconds" class="block text-3xl md:text-5xl font-bold">00</span>
+                    <span class="text-[10px] uppercase">Detik</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="acara" class="py-20 px-6 bg-white">
         <div class="max-w-6xl mx-auto text-center">
-            <h2 class="font-serif text-4xl text-dark-rose mb-12">Momen Indah</h2>
+            <h2 class="font-serif text-4xl text-dark-rose mb-12">Waktu & Tempat</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="p-10 border border-soft-rose rounded-3xl fade-in-section">
+                    <i data-lucide="book-open" class="mx-auto text-dusty-rose w-10 h-10 mb-6"></i>
+                    <h3 class="font-serif text-2xl mb-4">Akad Nikah</h3>
+                    <p class="font-bold text-dusty-rose mb-2">07:00 WIB</p>
+                    <p class="text-gray-600 mb-6">Ketimang, Wonoayu, Sidoarjo</p>
+                    <a href="https://maps.google.com" target="_blank" class="px-6 py-2 bg-dusty-rose text-white rounded-full text-sm inline-flex items-center gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i> Lihat Peta
+                    </a>
+                </div>
+                <div class="p-10 border border-soft-rose rounded-3xl fade-in-section">
+                    <i data-lucide="party-popper" class="mx-auto text-dusty-rose w-10 h-10 mb-6"></i>
+                    <h3 class="font-serif text-2xl mb-4">Resepsi</h3>
+                    <p class="font-bold text-dusty-rose mb-2">16:00 WIB</p>
+                    <p class="text-gray-600 mb-6">Ketimang, Wonoayu, Sidoarjo</p>
+                    <a href="https://maps.google.com" target="_blank" class="px-6 py-2 bg-dusty-rose text-white rounded-full text-sm inline-flex items-center gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i> Lihat Peta
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeri" class="py-20 px-6 bg-soft-rose/20">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="font-serif text-4xl text-dark-rose mb-12">Galeri Foto</h2>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <img src="galeri1.jpg" class="aspect-square object-cover rounded-lg shadow-md fade-in-section">
-                <img src="galeri2.jpg" class="aspect-square object-cover rounded-lg shadow-md fade-in-section">
-                <img src="galeri3.jpg" class="aspect-square object-cover rounded-lg shadow-md fade-in-section">
-                <img src="galeri4.jpg" class="aspect-square object-cover rounded-lg shadow-md fade-in-section">
-                <img src="galeri5.jpg" class="aspect-square object-cover rounded-lg shadow-md fade-in-section">
-                <img src="galeri6.jpg" class="aspect-square object-cover rounded-lg shadow-md fade-in-section">
+                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-in-section">
+                    <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80" class="w-full h-full object-cover">
+                </div>
+                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-in-section">
+                    <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80" class="w-full h-full object-cover">
+                </div>
+                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-in-section">
+                    <img src="https://images.unsplash.com/photo-1544124499-58912cbddaad?auto=format&fit=crop&q=80" class="w-full h-full object-cover">
+                </div>
             </div>
         </div>
     </section>
@@ -93,22 +178,55 @@
         <div class="max-w-2xl mx-auto bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl border border-soft-rose">
             <h2 class="font-serif text-3xl text-dark-rose text-center mb-8">RSVP & Ucapan</h2>
             <form id="rsvp-form" class="space-y-6">
-                <input type="text" id="rsvp-name" placeholder="Nama Lengkap" required class="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-dusty-rose">
-                <select id="rsvp-attendance" class="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none">
-                    <option value="Hadir">Hadir</option>
-                    <option value="Tidak Hadir">Tidak Hadir</option>
-                </select>
-                <textarea id="rsvp-message" placeholder="Tulis doa restu..." required rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-dusty-rose"></textarea>
-                <button type="submit" id="rsvp-submit" class="w-full py-4 bg-dusty-rose text-white font-bold rounded-xl hover:bg-dark-rose transition-all">Kirim Pesan</button>
+                <div>
+                    <label class="block text-xs font-bold mb-2 uppercase tracking-widest text-gray-500">Nama Lengkap</label>
+                    <input type="text" id="rsvp-name" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-dusty-rose outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-2 uppercase tracking-widest text-gray-500">Kehadiran</label>
+                    <select id="rsvp-attendance" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-dusty-rose outline-none">
+                        <option value="Hadir">Hadir</option>
+                        <option value="Tidak Hadir">Tidak Dapat Hadir</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-2 uppercase tracking-widest text-gray-500">Pesan Doa</label>
+                    <textarea id="rsvp-message" required rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-dusty-rose outline-none"></textarea>
+                </div>
+                <button type="submit" id="rsvp-submit" class="w-full py-4 bg-dusty-rose text-white font-bold rounded-xl hover:bg-dark-rose transition-all uppercase tracking-widest">
+                    Kirim Pesan
+                </button>
             </form>
-            <div id="guestbook" class="mt-12 space-y-4 max-h-96 overflow-y-auto pr-2"></div>
+            <div id="guestbook" class="mt-12 space-y-4 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
+                </div>
         </div>
     </section>
+
+    <section class="py-20 px-6 bg-dusty-rose/10 text-center">
+        <h2 class="font-serif text-3xl text-dark-rose mb-10">Amplop Digital</h2>
+        <div class="max-w-md mx-auto space-y-4">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-dusty-rose">
+                <p class="font-bold text-lg">647301010196535</p>
+                <p class="text-xs text-gray-500">BRI a.n M. Nur Alfarizi</p>
+                <button class="mt-2 text-dusty-rose text-xs font-bold copy-btn" data-rekening="647301010196535">SALIN NOMOR</button>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-dusty-rose">
+                <p class="font-bold text-lg">7265096409</p>
+                <p class="text-xs text-gray-500">BCA a.n Melinda Elfina R</p>
+                <button class="mt-2 text-dusty-rose text-xs font-bold copy-btn" data-rekening="7265096409">SALIN NOMOR</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 bg-white text-center text-gray-400 text-xs">
+        <p class="font-accent text-2xl text-dusty-rose mb-2">Alfarizi & Melinda</p>
+        <p>© 2026 Wedding Invitation.</p>
+    </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAo7yQJpGdgfYnou6NidFpsu1TqRq6CITk",
@@ -125,46 +243,90 @@
         const db = getFirestore(app);
         const rsvpForm = document.getElementById('rsvp-form');
 
+        let currentUser = null;
+
+        // Auth
         signInAnonymously(auth).catch(err => console.error("Auth failed", err));
 
         onAuthStateChanged(auth, (user) => {
-            if (user) loadMessages();
+            if (user) {
+                currentUser = user;
+                loadMessages();
+            }
         });
 
+        // Load Messages
         function loadMessages() {
-            onSnapshot(collection(db, "rsvp_messages"), (snap) => {
+            const q = collection(db, "rsvp_messages");
+            onSnapshot(q, (snapshot) => {
                 const guestbook = document.getElementById('guestbook');
                 let messages = [];
-                snap.forEach(doc => messages.push(doc.data()));
+                snapshot.forEach(doc => messages.push(doc.data()));
+                
+                // Sort by time
                 messages.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+
                 guestbook.innerHTML = messages.map(msg => `
-                    <div class="p-4 bg-soft-rose/20 rounded-xl border border-soft-rose">
-                        <div class="flex justify-between mb-1"><span class="font-bold text-dark-rose text-sm">${msg.name}</span><span class="text-[10px] px-2 py-0.5 bg-white rounded-full">${msg.attendance}</span></div>
+                    <div class="p-4 bg-soft-rose/20 rounded-xl border border-soft-rose text-left">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-dark-rose text-sm">${msg.name}</span>
+                            <span class="text-[10px] px-2 py-0.5 bg-white rounded-full border">${msg.attendance}</span>
+                        </div>
                         <p class="text-xs text-gray-600 italic">"${msg.message}"</p>
                     </div>
                 `).join('');
             });
         }
 
+        // Form Submit
         rsvpForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('rsvp-submit');
-            btn.disabled = true; btn.innerText = "Mengirim...";
+            const submitBtn = document.getElementById('rsvp-submit');
+            
+            if (!currentUser) return showToast("Menghubungkan...", "loading");
+
+            const data = {
+                name: document.getElementById('rsvp-name').value,
+                attendance: document.getElementById('rsvp-attendance').value,
+                message: document.getElementById('rsvp-message').value,
+                timestamp: serverTimestamp()
+            };
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Mengirim...";
+
             try {
-                await addDoc(collection(db, "rsvp_messages"), {
-                    name: document.getElementById('rsvp-name').value,
-                    attendance: document.getElementById('rsvp-attendance').value,
-                    message: document.getElementById('rsvp-message').value,
-                    timestamp: serverTimestamp()
-                });
+                await addDoc(collection(db, "rsvp_messages"), data);
+                showToast("Pesan Terkirim! 💌");
                 rsvpForm.reset();
-            } catch (err) { alert("Gagal mengirim"); }
-            finally { btn.disabled = false; btn.innerText = "Kirim Pesan"; }
+            } catch (err) {
+                showToast("Gagal mengirim", "error");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Kirim Pesan";
+            }
         });
     </script>
 
     <script>
         lucide.createIcons();
+
+        function showToast(msg, type = "success") {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => t.classList.add('translate-y-20', 'opacity-0'), 3000);
+        }
+
+        // Copy logic
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                navigator.clipboard.writeText(btn.dataset.rekening);
+                showToast("Nomor rekening disalin!");
+            });
+        });
+
+        // Music
         const music = document.getElementById('bg-music');
         const mBtn = document.getElementById('music-control');
         let playing = false;
@@ -173,6 +335,19 @@
             mBtn.classList.toggle('animate-spin');
             playing = !playing;
         };
+
+        // Countdown
+        const target = new Date("October 2, 2026 07:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = target - now;
+            document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('minutes').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('seconds').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+        }, 1000);
+
+        // Intersection Observer
         const obs = new IntersectionObserver(entries => {
             entries.forEach(e => e.isIntersecting && e.target.classList.add('is-visible'));
         });
