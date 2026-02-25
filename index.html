@@ -297,18 +297,21 @@ document.addEventListener("DOMContentLoaded", function() {
     const toast = document.getElementById("toast");
 
     function showToast(message) {
-        toast.textContent = message;
+    toast.innerHTML = `
+        <div class="flex items-center gap-2">
+            <span class="text-green-500 text-lg">✔</span>
+            <span>${message}</span>
+        </div>
+    `;
 
-        // Show
-        toast.classList.remove("translate-x-40", "opacity-0");
-        toast.classList.add("translate-x-0", "opacity-100");
+    toast.classList.remove("translate-x-40", "opacity-0");
+    toast.classList.add("translate-x-0", "opacity-100");
 
-        // Hide after 3 seconds
-        setTimeout(() => {
-            toast.classList.remove("translate-x-0", "opacity-100");
-            toast.classList.add("translate-x-40", "opacity-0");
-        }, 3000);
-    }
+    setTimeout(() => {
+        toast.classList.remove("translate-x-0", "opacity-100");
+        toast.classList.add("translate-x-40", "opacity-0");
+    }, 3000);
+}
 
     document.querySelectorAll('.copy-btn').forEach(button => {
         button.addEventListener('click', function() {
@@ -536,6 +539,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </body>
 
 </html>
+
 
 
 
