@@ -367,7 +367,7 @@ document.querySelectorAll(".copy-btn").forEach(button => {
 	  apiKey: "AIzaSyAo7yQJpGdgfYnou6NidFpsu1TqRq6CITk",
 	  authDomain: "website-undangan-951ce.firebaseapp.com",
 	  projectId: "website-undangan-951ce",
-	  storageBucket: "website-undangan-951ce.firebasestorage.app",
+	  storageBucket: "website-undangan-951ce.appspot.com",
 	  messagingSenderId: "731474935634",
 	  appId: "1:731474935634:web:15f0aa8045e84d851d048b",
 	  measurementId: "G-VLR28ZMMKP"
@@ -464,7 +464,7 @@ document.querySelectorAll(".copy-btn").forEach(button => {
                 const messagesRef = collection(db, 'artifacts', appId, 'public', 'data', 'rsvp_messages');
                 
                 await addDoc(messagesRef, {
-                    name,
+                    name, 
                     attendance,
                     message,
                     userId: currentUser.uid,
@@ -565,6 +565,7 @@ document.querySelectorAll(".copy-btn").forEach(button => {
 </body>
 
 </html>
+
 
 
 
