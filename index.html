@@ -317,52 +317,61 @@
         });
     </script>
 
-    <script>
-        lucide.createIcons();
+<script>
+    lucide.createIcons();
+    const music = document.getElementById('bg-music');
+    const mBtn = document.getElementById('music-control');
+    const btnBuka = document.getElementById('btn-buka');
+    let playing = false;
 
-        function showToast(msg, type = "success") {
-            const t = document.getElementById('toast');
-            t.innerText = msg;
-            t.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => t.classList.add('translate-y-20', 'opacity-0'), 3000);
-        }
-
-        // Copy logic
-        document.querySelectorAll('.copy-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                navigator.clipboard.writeText(btn.dataset.rekening);
-                showToast("Nomor rekening disalin!");
-            });
+    // Fungsi untuk memutar musik
+    function playMusic() {
+        music.play().then(() => {
+            mBtn.classList.add('animate-spin-slow'); // Gunakan class khusus agar putaran lebih elegan
+            playing = true;
+        }).catch(error => {
+            console.log("Autoplay dicegah oleh browser, menunggu interaksi.");
         });
+    }
 
-        // Music
-        const music = document.getElementById('bg-music');
-        const mBtn = document.getElementById('music-control');
-        let playing = false;
-        mBtn.onclick = () => {
-            playing ? music.pause() : music.play();
-            mBtn.classList.toggle('animate-spin');
-            playing = !playing;
-        };
+    // Trigger saat tombol Buka Undangan diklik
+    btnBuka.addEventListener('click', function(e) {
+        // Jangan gunakan preventDefault jika ingin link #cerita tetap jalan
+        playMusic(); 
+    });
 
-        // Countdown
-        const target = new Date("October 2, 2026 07:00:00").getTime();
-        setInterval(() => {
-            const now = new Date().getTime();
-            const diff = target - now;
+    // Toggle manual tombol musik di pojok
+    mBtn.onclick = () => {
+        if (playing) {
+            music.pause();
+            mBtn.classList.remove('animate-spin-slow');
+        } else {
+            playMusic();
+        }
+        playing = !playing;
+    };
+
+    // Countdown Logic (Sudah benar di kode awalmu)
+    const target = new Date("October 2, 2026 07:00:00").getTime();
+    setInterval(() => {
+        const now = new Date().getTime();
+        const diff = target - now;
+        if (diff > 0) {
             document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
             document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             document.getElementById('minutes').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             document.getElementById('seconds').innerText = Math.floor((diff % (1000 * 60)) / 1000);
-        }, 1000);
+        }
+    }, 1000);
 
-        // Intersection Observer
+    // Observer untuk animasi scroll
         const obs = new IntersectionObserver(entries => {
-            entries.forEach(e => e.isIntersecting && e.target.classList.add('is-visible'));
-        });
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+        }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in-section').forEach(s => obs.observe(s));
     </script>
 </body>
 </html>
+
 
 
