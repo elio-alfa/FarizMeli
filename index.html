@@ -271,23 +271,40 @@
             <h2 class="font-serif text-3xl text-dark-rose mb-6">Amplop Digital</h2>
             <p class="text-gray-600 mb-10">Doa restu Anda merupakan hadiah terindah, namun jika ingin memberikan tanda kasih, Anda dapat melalui:</p>
             
-            <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white p-8 rounded-2xl shadow-md border-t-4 border-dusty-rose">
+  				  <img src="https://upload.wikimedia.org/wikipedia/commons/6/68/BANK_BRI_logo.svg" alt="BRI" class="h-8 mx-auto mb-4">
+ 			 	  <p class="font-bold text-xl tracking-widest">647301010196535</p>
+ 					<p class="text-sm text-gray-500">a.n M. Nur Alfarizi</p>
+  				  <button class="mt-4 text-dusty-rose text-xs font-bold uppercase hover:underline copy-btn"
+    			    data-rekening="647301010196535">Salin Rekening</button>
+			</div>
                 <div class="bg-white p-8 rounded-2xl shadow-md border-t-4 border-dusty-rose">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/68/BANK_BRI_logo.svg" alt="BRI" class="h-8 mx-auto mb-4">
-                    <p class="font-bold text-xl tracking-widest">647301010196535</p>
-                    <p class="text-sm text-gray-500">a.n M. Nur Alfarizi</p>
-                    <button class="mt-4 text-dusty-rose text-xs font-bold uppercase hover:underline">Salin Rekening</button>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-md border-t-4 border-dusty-rose">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" alt="BCA" class="h-8 mx-auto mb-4">
-                    <p class="font-bold text-xl tracking-widest">7265096409</p>
-                    <p class="text-sm text-gray-500">a.n Melinda Elfina R</p>
-                    <button class="mt-4 text-dusty-rose text-xs font-bold uppercase hover:underline">Salin Rekening</button>
-                </div>
+			 		<img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" alt="BCA" class="h-8 mx-auto mb-4">
+  				 	<p class="font-bold text-xl tracking-widest">7265096409</p>
+    				<p class="text-sm text-gray-500">a.n Melinda Elfina R</p>
+  					<button class="mt-4 text-dusty-rose text-xs font-bold uppercase hover:underline copy-btn"
+       				 data-rekening="7265096409">Salin Rekening</button>
+				</div>
             </div>
         </div>
     </section>
+<script>
+    // Copy to Clipboard Function
+    document.querySelectorAll('.copy-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const rekening = button.getAttribute('data-rekening');
 
+            navigator.clipboard.writeText(rekening)
+                .then(() => {
+                    alert("Berhasil disalin");
+                })
+                .catch(err => {
+                    console.error("Gagal menyalin:", err);
+                    alert("Gagal menyalin nomor rekening");
+                });
+        });
+    });
+</script>
     <!-- Footer -->
     <footer class="py-12 bg-white text-center text-gray-400 text-sm">
         <p class="font-accent text-3xl text-dusty-rose mb-2">Alfarizi & Melinda</p>
@@ -494,5 +511,6 @@
 </body>
 
 </html>
+
 
 
