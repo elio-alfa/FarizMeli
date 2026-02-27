@@ -87,10 +87,20 @@
                 scroll-snap-align: center;
                 flex-shrink: 0;
             }
+        
+            /* Sembunyikan semua section kecuali Hero/Cover di awal */
+        .main-content {
+            display: none;
+        }
+
+        /* Hilangkan scroll saat cover masih aktif */
+        body.no-scroll {
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
-
+ <body class="no-scroll">
     <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 translate-y-20 opacity-0 transition-all duration-500 ease-out bg-white/95 backdrop-blur-md text-gray-800 px-6 py-4 rounded-2xl shadow-2xl text-sm font-medium z-[9999] border border-gray-200 min-w-[250px] text-center"></div>
 
     <audio id="bg-music" loop>
@@ -110,13 +120,15 @@
             <h1 class="font-serif text-5xl md:text-8xl font-bold mb-6 animate__animated animate__zoomIn">Alfarizi & Melinda</h1>
             <p class="text-lg md:text-2xl tracking-[0.2em] uppercase font-light animate__animated animate__fadeInUp">02 . 10 . 2026</p>
             <div class="mt-12">
-                <a href="#cerita" class="px-8 py-3 border border-white hover:bg-white hover:text-dusty-rose transition-all duration-300 rounded-full inline-flex items-center gap-2">
-                    Buka Undangan <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                <button id="btn-buka" class="px-8 py-3 border border-white hover:bg-white hover:text-burgundy transition-all duration-300 rounded-full inline-flex items-center gap-2 cursor-pointer">
+                Buka Undangan <i data-lucide="mail-open" class="w-4 h-4"></i>
                 </a>
             </div>
         </div>
     </section>
-
+     
+<div class="main-content" id="isi-undangan">
+    
     <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-md px-6 py-3 rounded-full shadow-xl border border-soft-rose z-50 flex gap-8">
         <a href="#" class="text-dark-rose hover:scale-110 transition-transform"><i data-lucide="home" class="w-5 h-5"></i></a>
         <a href="#acara" class="text-dark-rose hover:scale-110 transition-transform"><i data-lucide="calendar" class="w-5 h-5"></i></a>
@@ -326,7 +338,8 @@
         <p class="font-accent text-2xl text-dusty-rose mb-2">Alfarizi & Melinda</p>
         <p>© 2026 Wedding Invitation.</p>
     </footer>
-
+</div>
+     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -483,9 +496,32 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.fade-up, .zoom-in, .fade-in-section').forEach(el => {
     observer.observe(el);
 });
+        document.getElementById('btn-buka').addEventListener('click', function() {
+    // 1. Munculkan konten utama
+    document.getElementById('isi-undangan').style.display = 'block';
+    
+    // 2. Aktifkan scroll halaman
+    document.body.classList.remove('no-scroll');
+    
+    // 3. Putar Musik Otomatis
+    const music = document.getElementById('bg-music');
+    music.play();
+    
+    // 4. Update tampilan tombol musik (opsional)
+    const mBtn = document.getElementById('music-control');
+    mBtn.classList.add('animate-spin');
+    playing = true;
+
+    // 5. Scroll otomatis ke section pertama (Cerita)
+    document.getElementById('cerita').scrollIntoView({ behavior: 'smooth' });
+    
+    // Tambahan: Refresh animasi Lucide Icons
+    lucide.createIcons();
+});
     </script>
 </body>
 </html>
+
 
 
 
