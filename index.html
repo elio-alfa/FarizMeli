@@ -5,58 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Undangan Pernikahan - Alfarizi & Melinda</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Pinyon+Script&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --maroon-dark: #56131B;    /* Warna paling gelap di gambar */
-            --burgundy: #71142A;       /* Warna utama */
-            --bronze: #A77F60;         /* Warna aksen cokelat */
-            --champagne: #E3C8AE;      /* Warna background terang */
-            --soft-cream: #FDF8F2;     /* Warna dasar halaman */
-            
-        /* Animasi Khusus */
-    .fade-up {
-        opacity: 0;
-        transform: translateY(40px);
-        transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
-    }
-
-     .fade-up.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .zoom-in {
-        opacity: 0;
-        transform: scale(0.9);
-        transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
-    }
-
-    .zoom-in.is-visible {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    /* Efek Overlay Halus antar Section */
-    section {
-        position: relative;
-        z-index: 1;
-    }
-        body {
-            body { font-family: 'Inter', sans-serif; 
-                  background-color: var(--soft-cream); 
-                  color: #2D2D2D; overflow-x: hidden; 
+            /* Palette Tema: Gradasi Biru Muda & Pink Pastel */
+            --sky-blue-light: #EDF4F9;
+            --sky-blue: #D0E3F3;
+            --sky-blue-dark: #4A7FA0;
+            --pink-blush: #FADCD9;
+            --pink-rose: #F7A8B8;
+            --romantic-text: #3D5A6C;
         }
-        .font-serif { font-family: 'Playfair Display', serif; }
-        .font-accent { font-family: 'Great Vibes', cursive; }
-        /* Utility Classes Baru */
-        .text-burgundy { color: var(--burgundy); }
-        .bg-maroon { background-color: var(--maroon-dark); }
-        .bg-burgundy { background-color: var(--burgundy); }
-        .border-bronze { border-color: var(--bronze); }
-        .bg-champagne { background-color: var(--champagne); }
+        
+        /* Animasi Transisi Elemen */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .fade-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .zoom-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .zoom-in.is-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        section {
+            position: relative;
+            z-index: 1;
+        }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: linear-gradient(135deg, var(--sky-blue-light) 0%, #FFF5F6 100%); 
+            color: #333333; 
+            overflow-x: hidden; 
+        }
+        
+        /* Font Styles Baru Lebih Luwes & Anggun */
+        .font-serif { font-family: 'Cormorant Garamond', serif; }
+        .font-accent { font-family: 'Pinyon Script', cursive; }
+        
+        /* Utility Gradasi & Warna Custom */
+        .bg-gradient-theme {
+            background: linear-gradient(135deg, var(--sky-blue) 0%, var(--pink-blush) 100%);
+        }
+        .bg-gradient-button {
+            background: linear-gradient(90deg, var(--sky-blue-dark) 0%, var(--pink-rose) 100%);
+        }
+        .text-theme-dark { color: var(--romantic-text); }
+        .text-pink-rose { color: var(--pink-rose); }
+        .border-sky-blue { border-color: var(--sky-blue); }
+        .border-pink-blush { border-color: var(--pink-blush); }
         
         .fade-in-section {
             opacity: 0;
@@ -67,221 +79,216 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
         #music-control {
             bottom: 80px;
             left: 20px;
             z-index: 999;
         }
         .custom-scrollbar::-webkit-scrollbar { width: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--dusty-rose); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--pink-rose); border-radius: 10px; }
 
-            /* Slider Styling */
-            .slides-container {
-                -ms-overflow-style: none; /* Internet Explorer 10+ */
-                scrollbar-width: none; /* Firefox */
-            }
-            .slides-container::-webkit-scrollbar { 
-                display: none; /* Safari and Chrome */
-            }
-            .slide-item {
-                scroll-snap-align: center;
-                flex-shrink: 0;
-            }
+        .slides-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .slides-container::-webkit-scrollbar { 
+            display: none;
+        }
+        .slide-item {
+            scroll-snap-align: center;
+            flex-shrink: 0;
+        }
         
-            /* Sembunyikan semua section kecuali Hero/Cover di awal */
         .main-content {
             display: none;
         }
 
-        /* Hilangkan scroll saat cover masih aktif */
         body.no-scroll {
             overflow: hidden;
         }
     </style>
 </head>
-<body>
- <body class="no-scroll">
+<body class="no-scroll">
     <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 translate-y-20 opacity-0 transition-all duration-500 ease-out bg-white/95 backdrop-blur-md text-gray-800 px-6 py-4 rounded-2xl shadow-2xl text-sm font-medium z-[9999] border border-gray-200 min-w-[250px] text-center"></div>
 
     <audio id="bg-music" loop>
         <source src="musik.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="music-control" class="fixed flex items-center justify-center w-12 h-12 bg-white rounded-full shadow-lg border-dusty-rose cursor-pointer animate-bounce">
-        <i data-lucide="music" class="text-burgundy w-6 h-6"></i>
+    <div id="music-control" class="fixed flex items-center justify-center w-12 h-12 bg-white rounded-full shadow-lg border border-pink-blush cursor-pointer animate-bounce">
+        <i data-lucide="music" class="text-theme-dark w-6 h-6"></i>
     </div>
 
+    <!-- =========================================================
+         SAMPUL / COVER UNDANGAN (VERSI CUSTOMISASI)
+         Silakan ubah background gambar, teks, atau susunannya di sini
+         ========================================================= -->
     <section class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <div class="w-full h-full bg-[url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80')] bg-cover bg-center brightness-50"></div>
+            <!-- Ganti URL di bawah ini dengan gambar latar sampul pilihan Anda -->
+            <div class="w-full h-full bg-[url('https://images.unsplash.com/photo-1519225495810-7512c696505a?auto=format&fit=crop&q=80')] bg-cover bg-center brightness-[0.65]"></div>
         </div>
-        <div class="relative z-10 text-center text-white px-4">
-            <p class="font-accent text-3xl md:text-5xl mb-4 animate__animated animate__fadeInDown">The Wedding of</p>
-            <h1 class="font-serif text-5xl md:text-8xl font-bold mb-6 animate__animated animate__zoomIn">Alfarizi & Melinda</h1>
-            <p class="text-lg md:text-2xl tracking-[0.2em] uppercase font-light animate__animated animate__fadeInUp">03 . 10 . 2026</p>
+        
+        <!-- Frame Hiasan Sampul Kustom Lembut -->
+        <div class="absolute inset-6 border border-white/20 rounded-2xl z-5 pointer-events-none"></div>
+
+        <div class="relative z-10 text-center text-white px-6 max-w-2xl">
+            <p class="text-sm md:text-base tracking-[0.3em] uppercase mb-4 font-light opacity-90 animate__animated animate__fadeInDown">Pernikahan Impian</p>
+            
+            <!-- Nama Menggunakan Font Kaligrafi Pinyon Script Luwes -->
+            <h1 class="font-accent text-6xl md:text-8xl my-2 text-pink-blush drop-shadow-md animate__animated animate__zoomIn">Alfarizi & Melinda</h1>
+            
+            <p class="font-serif text-xl md:text-2xl tracking-wide italic mt-4 opacity-95 animate__animated animate__fadeInUp">Sabtu, 03 Oktober 2026</p>
+            
             <div class="mt-12">
-                <button id="btn-buka" class="px-8 py-3 border border-white hover:bg-white hover:text-burgundy transition-all duration-300 rounded-full inline-flex items-center gap-2 cursor-pointer">
-                Buka Undangan <i data-lucide="mail-open" class="w-4 h-4"></i>
-                </a>
+                <button id="btn-buka" class="px-8 py-3 bg-white/10 backdrop-blur border border-white/40 hover:bg-white hover:text-theme-dark transition-all duration-500 rounded-full inline-flex items-center gap-2 cursor-pointer shadow-xl tracking-widest text-xs uppercase font-semibold">
+                    Buka Undangan <i data-lucide="mail-open" class="w-4 h-4"></i>
+                </button>
             </div>
         </div>
     </section>
      
 <div class="main-content" id="isi-undangan">
     
-    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-md px-6 py-3 rounded-full shadow-xl border border-soft-rose z-50 flex gap-8">
-        <a href="#" class="text-dark-rose hover:scale-110 transition-transform"><i data-lucide="home" class="w-5 h-5"></i></a>
-        <a href="#acara" class="text-dark-rose hover:scale-110 transition-transform"><i data-lucide="calendar" class="w-5 h-5"></i></a>
-        <a href="#galeri" class="text-dark-rose hover:scale-110 transition-transform"><i data-lucide="image" class="w-5 h-5"></i></a>
-        <a href="#rsvp" class="text-dark-rose hover:scale-110 transition-transform"><i data-lucide="mail" class="w-5 h-5"></i></a>
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/70 backdrop-blur-md px-6 py-3 rounded-full shadow-xl border border-sky-blue z-50 flex gap-8">
+        <a href="#" class="text-theme-dark hover:scale-110 transition-transform"><i data-lucide="home" class="w-5 h-5"></i></a>
+        <a href="#acara" class="text-theme-dark hover:scale-110 transition-transform"><i data-lucide="calendar" class="w-5 h-5"></i></a>
+        <a href="#galeri" class="text-theme-dark hover:scale-110 transition-transform"><i data-lucide="image" class="w-5 h-5"></i></a>
+        <a href="#rsvp" class="text-theme-dark hover:scale-110 transition-transform"><i data-lucide="mail" class="w-5 h-5"></i></a>
     </nav>
 
-    <section id="cerita" class="py-20 px-6 max-w-4xl mx-auto text-justify-center fade-in-section">
-        <i data-lucide="heart" class="mx-auto text-dusty-rose w-10 h-10 mb-6"></i>
-        <h2 class="font-serif text-3xl md:text-4xl text-dark-rose mb-8 italic">"Cerita cinta kami dimulai dari..."</h2>
-        <p class="leading-relaxed text-gray-600 italic">
-            "2023 — Di Tempat Belajar, Kami Mulai Mengenal
+    <section id="cerita" class="py-20 px-6 max-w-4xl mx-auto text-center fade-in-section">
+        <i data-lucide="heart" class="mx-auto text-pink-rose w-10 h-10 mb-4 animate-pulse"></i>
+        <h2 class="font-serif text-4xl md:text-5xl text-theme-dark mb-10 italic">"Cerita cinta kami dimulai dari..."</h2>
+        <div class="leading-relaxed text-gray-700 text-left space-y-6 font-light">
+            
+            <div class="border-b border-sky-blue/50 pb-6">
+                <h4 class="font-serif text-2xl font-bold text-theme-dark mb-2">2023 — Di Tempat Belajar, Kami Mulai Mengenal</h4>
+                <p class="italic mb-3"><strong>Ms. Melinda:</strong> 9 Maret 2023 merupakan awal saya melihat beliau (Mas Fariz yang kini menjadi calon suami saya) mengajar di kelas. Setiap kali saya bertanya kepada beliau, beliau sering mengabaikan saya. Hingga pada suatu momen di hari Jumat, saat kegiatan Jumat Bersih, saya melihat bayangan beliau yang sedang menyapu tepat di depan saya. Saya melampiaskan kekesalan dengan menginjak-injak bayangan tubuhnya. Saat itu saya berpikir, setelah ini saya dan pak Fariz hanya akan menjadi orang asing kembali, tidak lebih dari instruktur dan peserta pelatihan. Ternyata semesta sedang menata kami berdua, dari orang asing menjadi dua insan yang paling terkasih. 😁</p>
+                <p class="italic text-gray-400"><strong>Mr. Fariz:</strong> ...</p>
+            </div>
 
-2023
+            <div class="border-b border-sky-blue/50 pb-6">
+                <h4 class="font-serif text-2xl font-bold text-theme-dark mb-2">2024</h4>
+                <p class="italic mb-3"><strong>Ms. Melinda:</strong> Kami sempat kehilangan kontak, hingga suatu hari beliau mengomentari Snap WhatsApp saya. Sejak saat itu kami mulai berkomunikasi kembali. Obrolan kami dimulai dari hal-hal random, diskusi ringan, cerita keseharian, hingga saling curhat. Kalau kata Pak Fariz, "Meli ilang-ilangan." Notifikasi WhatsApp yang dulu sering muncul di ponsel saya adalah "Meli", "Melii Gosend", hingga "Meli Melilili (text bernada yalili yalili)." Banyak hal lucu yang beliau hadirkan setiap harinya. Chemistry kami bukan hanya di chat, tetapi juga saat sering mabar Mobile Legends bersama teman-teman.</p>
+                <p class="italic text-gray-400"><strong>Mr. Fariz:</strong> ...</p>
+            </div>
 
-Ms. Melinda:
-9 Maret 2023 merupakan awal saya melihat beliau (Mas Fariz yang kini menjadi calon suami saya) mengajar di kelas. Setiap kali saya bertanya kepada beliau, beliau sering mengabaikan saya. Hingga pada suatu momen di hari Jumat, saat kegiatan Jumat Bersih, saya melihat bayangan beliau yang sedang menyapu tepat di depan saya. Saya melampiaskan kekesalan dengan menginjak-injak bayangan tubuhnya. Saat itu saya berpikir, setelah ini saya dan pak Fariz hanya akan menjadi orang asing kembali, tidak lebih dari instruktur dan peserta pelatihan. Ternyata semesta sedang menata kami berdua, dari orang asing menjadi dua insan yang paling terkasih. 😁
+            <div class="border-b border-sky-blue/50 pb-6">
+                <h4 class="font-serif text-2xl font-bold text-theme-dark mb-2">2025</h4>
+                <p class="italic mb-3"><strong>Ms. Melinda:</strong> Pada bulan Mei, saya sedang berada di Shinkansen (kereta cepat) dari Kyoto menuju Osaka. Di sanalah saya baru menyadari bahwa saya memiliki perasaan kepada beliau. Setiap kali melihat notifikasi di ponsel, beliau selalu menjadi orang yang paling cepat membalas pesan saya. Saat saya membuka riwayat chat, ternyata saya lebih sering berkomunikasi dengan Pak Fariz dibandingkan siapa pun. Saya mengirimkan video Gunung Fuji, hutan bambu, makanan, hingga berbagai kegiatan selama di Jepang kepada beliau.</p>
+                <p class="italic mb-3">Di dalam hati saya berdoa, "Ya Allah, besok pagi adalah ulang tahun saya. Datangkanlah segala takdir baik untuk saya. Jika beliau memang menjadi takdir saya, izinkan saya kembali ke Jepang suatu hari nanti bersamanya."</p>
+                <p class="italic mb-3">Setelah kembali ke Indonesia, pada 25 Mei kami memutuskan bertemu untuk memberikan oleh-oleh di Poin Cafe, Pondok Jati, Sidoarjo. Ternyata, pertemuan sederhana itu menjadi awal dari banyak tanggal penting dalam perjalanan kami. Tanpa rencana, kami bahkan tidak berpacaran jadi tidak punya tanggal jadian. Semua terjadi di luar kuasa kami dan atas kehendak Tuhan. Hingga akhirnya hadir tanggal meminta restu kepada orang tua, tanggal khitbah, dan tanggal lamaran ditahun 2025.</p>
+                <p class="italic text-gray-400"><strong>Mr. Fariz:</strong> ...</p>
+            </div>
 
-Mr. Fariz:
+            <div class="border-b border-sky-blue/50 pb-6">
+                <h4 class="font-serif text-2xl font-bold text-theme-dark mb-2">2026</h4>
+                <p class="italic mb-3"><strong>Ms. Melinda:</strong> Setelah banyak kisah manis yang kami lalui bersama, panggilan yang sebelumnya "Pak Fariz" berubah menjadi "Mas Fariz", lalu menjadi "Sayang". Begitu pula perjalanan kami, penuh naik turun seperti roller coaster tanpa sabuk pengaman. Dari setiap proses itu, saya belajar dan bertumbuh menjadi pribadi yang lebih baik.</p>
+                <p class="italic mb-3">Jalan kami memang banyak dimudahkan. Namun, bukan berarti kami tidak pernah merasakan bagaimana rasanya diuji, dituntut, dan dibentuk oleh Tuhan.</p>
+                <p class="italic mb-3">Hari ini, dan untuk hari-hari berikutnya, saya akan tetap memilih melangkah bersama beliau. Bukan karena kisah kami sempurna, melainkan karena saya ingin menghabiskan sisa usia yang Tuhan titipkan dengan menyandang panggilan sederhana namun paling bermakna bagi saya: Nyonya Alfarizi. 🤍</p>
+                <p class="italic text-gray-400"><strong>Mr. Fariz:</strong> ...</p>
+            </div>
 
----
-
-2024
-
-Ms. Melinda:
-Kami sempat kehilangan kontak, hingga suatu hari beliau mengomentari Snap WhatsApp saya. Sejak saat itu kami mulai berkomunikasi kembali. Obrolan kami dimulai dari hal-hal random, diskusi ringan, cerita keseharian, hingga saling curhat. Kalau kata Pak Fariz, "Meli ilang-ilangan." Notifikasi WhatsApp yang dulu sering muncul di ponsel saya adalah "Meli", "Melii Gosend", hingga "Meli Melilili (text bernada yalili yalili)." Banyak hal lucu yang beliau hadirkan setiap harinya. Chemistry kami bukan hanya di chat, tetapi juga saat sering mabar Mobile Legends bersama teman-teman.
-
-Mr. Fariz:
-
----
-
-2025
-
-Ms. Melinda:
-Pada bulan Mei, saya sedang berada di Shinkansen (kereta cepat) dari Kyoto menuju Osaka. Di sanalah saya baru menyadari bahwa saya memiliki perasaan kepada beliau. Setiap kali melihat notifikasi di ponsel, beliau selalu menjadi orang yang paling cepat membalas pesan saya. Saat saya membuka riwayat chat, ternyata saya lebih sering berkomunikasi dengan Pak Fariz dibandingkan siapa pun. Saya mengirimkan video Gunung Fuji, hutan bambu, makanan, hingga berbagai kegiatan selama di Jepang kepada beliau.
-
-Di dalam hati saya berdoa, "Ya Allah, besok pagi adalah ulang tahun saya. Datangkanlah segala takdir baik untuk saya. Jika beliau memang menjadi takdir saya, izinkan saya kembali ke Jepang suatu hari nanti bersamanya."
-
-Setelah kembali ke Indonesia, pada 25 Mei kami memutuskan bertemu untuk memberikan oleh-oleh di Poin Cafe, Pondok Jati, Sidoarjo. Ternyata, pertemuan sederhana itu menjadi awal dari banyak tanggal penting dalam perjalanan kami. Tanpa rencana, kami bahkan tidak berpacaran jadi tidak punya tanggal jadian. Semua terjadi di luar kuasa kami dan atas kehendak Tuhan. Hingga akhirnya hadir tanggal meminta restu kepada orang tua, tanggal khitbah, dan tanggal lamaran ditahun 2025.
-
-Mr. Fariz:
-
----
-
-2026
-
-Ms. Melinda:
-Setelah banyak kisah manis yang kami lalui bersama, panggilan yang sebelumnya "Pak Fariz" berubah menjadi "Mas Fariz", lalu menjadi "Sayang". Begitu pula perjalanan kami, penuh naik turun seperti roller coaster tanpa sabuk pengaman. Dari setiap proses itu, saya belajar dan bertumbuh menjadi pribadi yang lebih baik.
-
-Jalan kami memang banyak dimudahkan. Namun, bukan berarti kami tidak pernah merasakan bagaimana rasanya diuji, dituntut, dan dibentuk oleh Tuhan.
-
-Hari ini, dan untuk hari-hari berikutnya, saya akan tetap memilih melangkah bersama beliau. Bukan karena kisah kami sempurna, melainkan karena saya ingin menghabiskan sisa usia yang Tuhan titipkan dengan menyandang panggilan sederhana namun paling bermakna bagi saya: Nyonya Alfarizi. 🤍
-
-Mr. Fariz:
-
----
-Clossing statement 
-Ms. Melinda:
-"Ternyata, menginjak bayangan orang yang pernah saya kesali, berakhir dengan melangkah bersamanya menuju pelaminan. Yang awalnya saya kira hanya akan menjadi orang asing, ternyata adalah dua jiwa yang telah saling mengenal dan ditetapkan di Lauhul Mahfudz sejak lima puluh ribu tahun sebelum Allah menciptakan langit dan bumi." 🤍
-
-Mr. Fariz:
-        </p>
-        
+            <div class="pt-2">
+                <h4 class="font-serif text-2xl font-bold text-theme-dark mb-2">Closing Statement</h4>
+                <p class="italic mb-3"><strong>Ms. Melinda:</strong> "Ternyata, menginjak bayangan orang yang pernah saya kesali, berakhir dengan melangkah bersamanya menuju pelaminan. Yang awalnya saya kira hanya akan menjadi orang asing, ternyata adalah dua jiwa yang telah saling mengenal dan ditetapkan di Lauhul Mahfudz sejak lima puluh ribu tahun sebelum Allah menciptakan langit dan bumi." 🤍</p>
+                <p class="italic text-gray-400"><strong>Mr. Fariz:</strong> ...</p>
+            </div>
+        </div>
     </section>
-    <section id="cerita" class="py-20 bg-champagne/20 overflow-hidden">
-    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-around gap-12 text-center">
-        <div class="fade-up"> 
-            <div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white shadow-xl mx-auto mb-6">
-                <img src="foto-pria.jpg" class="w-full h-full object-cover">
+
+    <!-- Section Mempelai dengan Gradasi Warna Lembut -->
+    <section class="py-20 bg-gradient-theme overflow-hidden shadow-inner">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-around gap-12 text-center">
+            <div class="fade-up"> 
+                <div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white shadow-2xl mx-auto mb-6">
+                    <img src="foto-pria.jpg" class="w-full h-full object-cover" alt="Foto Mempelai Pria">
+                </div>
+                <h3 class="font-serif text-3xl md:text-4xl text-theme-dark font-bold">M. Nur Alfarizi</h3>
+                <p class="text-xs font-semibold tracking-widest text-theme-dark/80 uppercase mt-2">Putra Bpk. Zamroji & Ibu Maidah</p>
             </div>
-            <h3 class="font-serif text-3xl text-dark-rose">M. Nur Alfarizi</h3>
-            <p class="text-xs font-bold text-dusty-rose uppercase">Putra Bpk. Zamroji & Ibu Maidah</p>
-        </div>
 
-        <div class="font-accent text-6xl text-dusty-rose zoom-in">&</div>
+            <div class="font-accent text-7xl text-pink-rose drop-shadow zoom-in">&</div>
 
-        <div class="fade-up" style="transition-delay: 200ms;"> 
-            <div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white shadow-xl mx-auto mb-6">
-                <img src="foto-wanita.jpg" class="w-full h-full object-cover">
+            <div class="fade-up" style="transition-delay: 200ms;"> 
+                <div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white shadow-2xl mx-auto mb-6">
+                    <img src="foto-wanita.jpg" class="w-full h-full object-cover" alt="Foto Mempelai Wanita">
+                </div>
+                <h3 class="font-serif text-3xl md:text-4xl text-theme-dark font-bold">Melinda Elfina R.</h3>
+                <p class="text-xs font-semibold tracking-widest text-theme-dark/80 uppercase mt-2">Putri Bpk. Hasanuddin & Ibu Siti Khalimah</p>
             </div>
-            <h3 class="font-serif text-3xl text-dark-rose">Melinda Elfina R.</h3>
-            <p class="text-xs font-bold text-dusty-rose uppercase">Putri Bpk. Hasanuddin & Ibu Siti Khalimah</p>
         </div>
-    </div>
-</section>
+    </section>
 
-    <section class="py-20 bg-maroon text-white text-center">
+    <section class="py-20 bg-gradient-button text-white text-center shadow-lg">
         <div class="max-w-4xl mx-auto px-6">
-            <h2 class="font-serif text-2xl mb-10 tracking-widest uppercase">Menghitung Hari</h2>
+            <h2 class="font-serif text-3xl mb-10 tracking-widest uppercase">Menghitung Hari Bahagia</h2>
             <div class="grid grid-cols-4 gap-4 md:gap-8" id="countdown">
-                <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
-                    <span id="days" class="block text-3xl md:text-5xl font-bold">00</span>
-                    <span class="text-[10px] uppercase">Hari</span>
+                <div class="bg-white/15 backdrop-blur-md p-4 rounded-2xl border border-white/20 shadow-md">
+                    <span id="days" class="block text-3xl md:text-5xl font-bold font-serif">00</span>
+                    <span class="text-[10px] tracking-wider uppercase opacity-90">Hari</span>
                 </div>
-                <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
-                    <span id="hours" class="block text-3xl md:text-5xl font-bold">00</span>
-                    <span class="text-[10px] uppercase">Jam</span>
+                <div class="bg-white/15 backdrop-blur-md p-4 rounded-2xl border border-white/20 shadow-md">
+                    <span id="hours" class="block text-3xl md:text-5xl font-bold font-serif">00</span>
+                    <span class="text-[10px] tracking-wider uppercase opacity-90">Jam</span>
                 </div>
-                <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
-                    <span id="minutes" class="block text-3xl md:text-5xl font-bold">00</span>
-                    <span class="text-[10px] uppercase">Menit</span>
+                <div class="bg-white/15 backdrop-blur-md p-4 rounded-2xl border border-white/20 shadow-md">
+                    <span id="minutes" class="block text-3xl md:text-5xl font-bold font-serif">00</span>
+                    <span class="text-[10px] tracking-wider uppercase opacity-90">Menit</span>
                 </div>
-                <div class="bg-white/10 backdrop-blur p-4 rounded-lg">
-                    <span id="seconds" class="block text-3xl md:text-5xl font-bold">00</span>
-                    <span class="text-[10px] uppercase">Detik</span>
+                <div class="bg-white/15 backdrop-blur-md p-4 rounded-2xl border border-white/20 shadow-md">
+                    <span id="seconds" class="block text-3xl md:text-5xl font-bold font-serif">00</span>
+                    <span class="text-[10px] tracking-wider uppercase opacity-90">Detik</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="acara" class="py-20 px-6 bg-white">
+    <section id="acara" class="py-20 px-6 bg-white/60">
         <div class="max-w-6xl mx-auto text-center">
-            <h2 class="font-serif text-4xl text-dark-rose mb-12">Waktu & Tempat</h2>
+            <h2 class="font-serif text-4xl md:text-5xl text-theme-dark mb-16 italic">Waktu & Tempat Acara</h2>
             <div class="grid md:grid-cols-2 gap-8">
-                <div class="p-10 border border-soft-rose rounded-3xl fade-in-section">
-                    <i data-lucide="book-open" class="mx-auto text-dusty-rose w-10 h-10 mb-6"></i>
-                    <h3 class="font-serif text-2xl mb-4">Pengajian</h3>
-                    <p class="font-bold text-dusty-rose mb-2">Tanggal 01-10-2026</p>
-                    <p class="font-bold text-dusty-rose mb-2">07:00 WIB</p>
-                    <p class="text-gray-600 mb-6">Ketimang, Wonoayu, Sidoarjo</p>
-                    <a href="https://maps.app.goo.gl/F8zE9t7zpeumBcJa9" target="_blank" class="px-6 py-2 bg-burgundy text-white font-bold rounded-full text-sm inline-flex items-center gap-2 shadow-lg hover:shadow-dark-rose/40 transition-all uppercase tracking-widest">
+                <div class="p-10 bg-white/80 border border-sky-blue rounded-3xl shadow-xl hover:shadow-2xl transition-all fade-in-section">
+                    <i data-lucide="book-open" class="mx-auto text-sky-blue-dark w-10 h-10 mb-6"></i>
+                    <h3 class="font-serif text-2xl font-bold text-theme-dark mb-4">Pengajian</h3>
+                    <p class="font-semibold text-pink-rose mb-2">Tanggal 01-10-2026</p>
+                    <p class="font-semibold text-theme-dark/80 mb-2">07:00 WIB</p>
+                    <p class="text-gray-600 mb-6 text-sm">Ketimang, Wonoayu, Sidoarjo</p>
+                    <a href="https://maps.app.goo.gl/F8zE9t7zpeumBcJa9" target="_blank" class="px-6 py-2.5 bg-gradient-button text-white font-semibold rounded-full text-xs inline-flex items-center gap-2 shadow-md hover:scale-105 transition-all uppercase tracking-widest">
                         <i data-lucide="map-pin" class="w-4 h-4"></i> Lihat Peta
                     </a>
                 </div>
-                <div class="p-10 border border-soft-rose rounded-3xl fade-in-section">
-                    <i data-lucide="book-open" class="mx-auto text-dusty-rose w-10 h-10 mb-6"></i>
-                    <h3 class="font-serif text-2xl mb-4">Akad Nikah</h3>
-                    <p class="font-bold text-dusty-rose mb-2">Tanggal 03-10-2026</p>
-                    <p class="font-bold text-dusty-rose mb-2">08:00 WIB</p>
-                    <p class="text-gray-600 mb-6">Ketimang, Wonoayu, Sidoarjo</p>
-                    <a href="https://maps.app.goo.gl/F8zE9t7zpeumBcJa9" target="_blank" class="px-6 py-2 bg-burgundy text-white font-bold rounded-full text-sm inline-flex items-center gap-2 shadow-lg hover:shadow-dark-rose/40 transition-all uppercase tracking-widest">
+                <div class="p-10 bg-white/80 border border-pink-blush rounded-3xl shadow-xl hover:shadow-2xl transition-all fade-in-section">
+                    <i data-lucide="heart" class="mx-auto text-pink-rose w-10 h-10 mb-6"></i>
+                    <h3 class="font-serif text-2xl font-bold text-theme-dark mb-4">Akad Nikah</h3>
+                    <p class="font-semibold text-pink-rose mb-2">Tanggal 03-10-2026</p>
+                    <p class="font-semibold text-theme-dark/80 mb-2">08:00 WIB</p>
+                    <p class="text-gray-600 mb-6 text-sm">Ketimang, Wonoayu, Sidoarjo</p>
+                    <a href="https://maps.app.goo.gl/F8zE9t7zpeumBcJa9" target="_blank" class="px-6 py-2.5 bg-gradient-button text-white font-semibold rounded-full text-xs inline-flex items-center gap-2 shadow-md hover:scale-105 transition-all uppercase tracking-widest">
                         <i data-lucide="map-pin" class="w-4 h-4"></i> Lihat Peta
                     </a>
                 </div>
-                <div class="p-10 border border-soft-rose rounded-3xl fade-in-section">
-                    <i data-lucide="party-popper" class="mx-auto text-dusty-rose w-10 h-10 mb-6"></i>
-                    <h3 class="font-serif text-2xl mb-4">Resepsi</h3>
-                    <p class="font-bold text-dusty-rose mb-2">Tanggal 03-10-2026</p>
-                    <p class="text-gray-600 mb-6">Mempelai Wanita</p>
-                    <p class="font-bold text-dusty-rose mb-2">16:00 WIB</p>
-                    <p class="text-gray-600 mb-6">Ketimang, Wonoayu, Sidoarjo</p>
-                    <a href="https://maps.app.goo.gl/F8zE9t7zpeumBcJa9" target="_blank" class="px-6 py-2 bg-burgundy text-white font-bold rounded-full text-sm inline-flex items-center gap-2 shadow-lg hover:shadow-dark-rose/40 transition-all uppercase tracking-widest">
+                <div class="p-10 bg-white/80 border border-pink-blush rounded-3xl shadow-xl hover:shadow-2xl transition-all fade-in-section">
+                    <i data-lucide="party-popper" class="mx-auto text-pink-rose w-10 h-10 mb-6"></i>
+                    <h3 class="font-serif text-2xl font-bold text-theme-dark mb-2">Resepsi</h3>
+                    <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Mempelai Wanita</p>
+                    <p class="font-semibold text-pink-rose mb-2">Tanggal 03-10-2026</p>
+                    <p class="font-semibold text-theme-dark/80 mb-2">16:00 WIB</p>
+                    <p class="text-gray-600 mb-6 text-sm">Ketimang, Wonoayu, Sidoarjo</p>
+                    <a href="https://maps.app.goo.gl/F8zE9t7zpeumBcJa9" target="_blank" class="px-6 py-2.5 bg-gradient-button text-white font-semibold rounded-full text-xs inline-flex items-center gap-2 shadow-md hover:scale-105 transition-all uppercase tracking-widest">
                         <i data-lucide="map-pin" class="w-4 h-4"></i> Lihat Peta
                     </a>
                 </div> 
-                <div class="p-10 border border-soft-rose rounded-3xl fade-in-section">
-                    <i class="mx-auto text-dusty-rose w-10 h-10 mb-6"></i>
-                    <h3 class="font-serif text-2xl mb-4">Resepsi</h3>
-                    <p class="text-gray-600 mb-6">Mempelai Laki-Laki</p>
-                    <p class="font-bold text-dusty-rose mb-2">Tanggal 05-10-2026</p>
-                    <p class="font-bold text-dusty-rose mb-2">16:00 WIB</p>
-                    <p class="text-gray-600 mb-6">Karangbangkal, Gempol, Pasuruan</p>
-                    <a href="https://maps.app.goo.gl/eVk9skcCfTAkRXWR9" target="_blank" class="px-6 py-2 bg-burgundy text-white font-bold rounded-full text-sm inline-flex items-center gap-2 shadow-lg hover:shadow-dark-rose/40 transition-all uppercase tracking-widest">
+                <div class="p-10 bg-white/80 border border-sky-blue rounded-3xl shadow-xl hover:shadow-2xl transition-all fade-in-section">
+                    <i data-lucide="party-popper" class="mx-auto text-sky-blue-dark w-10 h-10 mb-6"></i>
+                    <h3 class="font-serif text-2xl font-bold text-theme-dark mb-2">Resepsi</h3>
+                    <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Mempelai Laki-Laki</p>
+                    <p class="font-semibold text-pink-rose mb-2">Tanggal 05-10-2026</p>
+                    <p class="font-semibold text-theme-dark/80 mb-2">16:00 WIB</p>
+                    <p class="text-gray-600 mb-6 text-sm">Karangbangkal, Gempol, Pasuruan</p>
+                    <a href="https://maps.app.goo.gl/eVk9skcCfTAkRXWR9" target="_blank" class="px-6 py-2.5 bg-gradient-button text-white font-semibold rounded-full text-xs inline-flex items-center gap-2 shadow-md hover:scale-105 transition-all uppercase tracking-widest">
                         <i data-lucide="map-pin" class="w-4 h-4"></i> Lihat Peta
                     </a>
                 </div>
@@ -289,141 +296,151 @@ Mr. Fariz:
         </div>
     </section>
     
-<section id="foto-slide" class="py-20 bg-white overflow-hidden">
+<section id="foto-slide" class="py-20 bg-white/30 overflow-hidden">
     <div class="max-w-6xl mx-auto px-6">
         <div class="text-center mb-12 fade-up">
-            <h2 class="font-serif text-4xl text-dark-rose">Momen Bahagia</h2>
-            <p class="text-gray-500 mt-2 italic text-sm">Geser untuk melihat lebih banyak</p>
+            <h2 class="font-serif text-4xl text-theme-dark italic">Galeri Momen Bahagia</h2>
+            <p class="text-gray-500 mt-2 italic text-sm font-light">Geser untuk melihat lebih banyak memori kami</p>
         </div>
 
         <div class="relative group">
             <div id="slider" class="slides-container flex overflow-x-auto gap-4 scroll-smooth snap-x snap-mandatory pb-4">
-                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
+                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
                     <img src="galeri1.jpg" class="w-full h-full object-cover" alt="Momen 1">
                 </div>
-                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
+                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
                     <img src="galeri2.jpg" class="w-full h-full object-cover" alt="Momen 2">
                 </div>
-                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
+                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
                     <img src="galeri3.jpg" class="w-full h-full object-cover" alt="Momen 3">
                 </div>
-                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
+                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
                     <img src="galeri4.jpg" class="w-full h-full object-cover" alt="Momen 4">
                 </div>
-                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
+                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
                     <img src="galeri5.jpg" class="w-full h-full object-cover" alt="Momen 5">
                 </div>
-                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
+                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
                     <img src="galeri6.jpg" class="w-full h-full object-cover" alt="Momen 6">
                 </div>
-                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
+                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
                     <img src="galeri7.jpg" class="w-full h-full object-cover" alt="Momen 7">
                 </div>
             </div>
 
-            <button onclick="moveSlide('left')" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                <i data-lucide="chevron-left" class="text-dark-rose"></i>
+            <button onclick="moveSlide('left')" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 p-2.5 rounded-full shadow-md z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                <i data-lucide="chevron-left" class="text-theme-dark"></i>
             </button>
-            <button onclick="moveSlide('right')" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-md z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                <i data-lucide="chevron-right" class="text-dark-rose"></i>
+            <button onclick="moveSlide('right')" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 p-2.5 rounded-full shadow-md z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                <i data-lucide="chevron-right" class="text-theme-dark"></i>
             </button>
+        </div>
+
+        <!-- =========================================================
+             FORM AKSES LINK GOOGLE DRIVE (UPLOAD FOTO TAMU)
+             ========================================================= -->
+        <div class="mt-16 max-w-xl mx-auto p-8 bg-gradient-theme rounded-3xl border border-white shadow-xl text-center fade-in-section">
+            <i data-lucide="cloud-lightning" class="mx-auto text-sky-blue-dark w-8 h-8 mb-3"></i>
+            <h3 class="font-serif text-2xl text-theme-dark font-bold mb-2">Bagikan Momen Bahagia Anda</h3>
+            <p class="text-xs text-gray-600 mb-6 font-light leading-relaxed">Punya foto keseruan atau kenangan manis bersama kami selama acara? Unggah file foto dokumentasi terbaik Anda ke dalam folder Google Drive bersama kami.</p>
+            <!-- Ganti href dengan link tautan folder Google Drive Anda asli -->
+            <a href="https://drive.google.com" target="_blank" class="px-8 py-3 bg-gradient-button text-white font-semibold text-xs tracking-widest uppercase rounded-full inline-flex items-center gap-3 shadow-md hover:scale-105 transition-all">
+                <i data-lucide="upload-cloud" class="w-4 h-4"></i> Upload Foto Kalian Disini
+            </a>
         </div>
     </div>
 </section>
     
-    <section id="galeri" class="py-20 px-6 bg-soft-rose/20">
+    <section id="galeri" class="py-20 px-6 bg-gradient-theme/20">
         <div class="max-w-6xl mx-auto text-center">
-            <h2 class="font-serif text-4xl text-dark-rose mb-12">Galeri Foto</h2>
-            <div class="grid grid-cols-3 md:grid-cols-3 gap-4">
-                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-in-section">
-                    <img src="galeri1.jpg" class="aspect-square object-cover rounded-lg zoom-in">
+            <h2 class="font-serif text-4xl text-theme-dark mb-12 italic">Album Kenangan</h2>
+            <div class="grid grid-cols-3 gap-3 md:gap-4">
+                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="galeri1.jpg" class="w-full h-full object-cover rounded-lg zoom-in" alt="Galeri 1">
                 </div>
-                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-in-section">
-                    <img src="galeri2.jpg" class="aspect-square object-cover rounded-lg zoom-in" style="transition-delay: 100ms;">
+                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="galeri2.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 100ms;" alt="Galeri 2">
                 </div>
-                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-in-section">
-                    <img src="galeri3.jpg" class="aspect-square object-cover rounded-lg zoom-in" style="transition-delay: 200ms;">
+                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="galeri3.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 200ms;" alt="Galeri 3">
                  </div>
-                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-in-section">
-                    <img src="galeri4.jpg" class="aspect-square object-cover rounded-lg zoom-in" style="transition-delay: 300ms;">
+                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="galeri4.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 300ms;" alt="Galeri 4">
                 </div>
-                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-in-section">
-                    <img src="galeri5.jpg" class="aspect-square object-cover rounded-lg zoom-in" style="transition-delay: 400ms;">
+                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="galeri5.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 400ms;" alt="Galeri 5">
                 </div>
-                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-in-section">
-                    <img src="galeri6.jpg" class="aspect-square object-cover rounded-lg zoom-in" style="transition-delay: 500ms;">
+                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="galeri6.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 500ms;" alt="Galeri 6">
                  </div>
-                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-in-section">
-                    <img src="galeri7.jpg" class="aspect-square object-cover rounded-lg zoom-in" style="transition-delay: 500ms;">
+                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="galeri7.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 500ms;" alt="Galeri 7">
                  </div>
-                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-in-section">
-                    <img src="galeri8.jpg" class="aspect-square object-cover rounded-lg zoom-in" style="transition-delay: 500ms;">
+                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="galeri8.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 500ms;" alt="Galeri 8">
                  </div>
-                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-in-section">
-                    <img src="galeri9.jpg" class="aspect-square object-cover rounded-lg zoom-in" style="transition-delay: 500ms;">
+                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="galeri9.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 500ms;" alt="Galeri 9">
                  </div>
             </div>
         </div>
     </section>
 
     <section id="rsvp" class="py-20 px-6">
-        <div class="max-w-2xl mx-auto bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl border border-soft-rose">
-            <h2 class="font-serif text-3xl text-dark-rose text-center mb-8">RSVP & Ucapan</h2>
+        <div class="max-w-2xl mx-auto bg-white/90 p-8 md:p-12 rounded-[2rem] shadow-2xl border border-pink-blush">
+            <h2 class="font-serif text-3xl text-theme-dark text-center mb-8 italic">RSVP & Ucapan Doa</h2>
             <form id="rsvp-form" class="space-y-6">
                 <div>
-                    <label class="block text-xs font-bold mb-2 uppercase tracking-widest text-gray-500">Nama Lengkap</label>
-                    <input type="text" id="rsvp-name" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-dusty-rose outline-none">
+                    <label class="block text-xs font-semibold mb-2 uppercase tracking-widest text-gray-500">Nama Lengkap</label>
+                    <input type="text" id="rsvp-name" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-rose outline-none font-light">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold mb-2 uppercase tracking-widest text-gray-500">Kehadiran</label>
-                    <select id="rsvp-attendance" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-dusty-rose outline-none">
+                    <label class="block text-xs font-semibold mb-2 uppercase tracking-widest text-gray-500">Konfirmasi Kehadiran</label>
+                    <select id="rsvp-attendance" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-rose outline-none font-light bg-white">
                         <option value="Hadir">Hadir</option>
                         <option value="Tidak Hadir">Tidak Dapat Hadir</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold mb-2 uppercase tracking-widest text-gray-500">Pesan Doa</label>
-                    <textarea id="rsvp-message" required rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-dusty-rose outline-none"></textarea>
+                    <label class="block text-xs font-semibold mb-2 uppercase tracking-widest text-gray-500">Pesan Doa Restu</label>
+                    <textarea id="rsvp-message" required rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-rose outline-none font-light"></textarea>
                 </div>
-                <button type="submit" id="rsvp-submit" class="w-full py-4 bg-burgundy text-white font-bold rounded-xl hover:bg-dark-rose shadow-lg hover:shadow-dark-rose/40 transition-all uppercase tracking-widest">
-                    Kirim Pesan
+                <button type="submit" id="rsvp-submit" class="w-full py-4 bg-gradient-button text-white font-bold rounded-xl shadow-lg hover:shadow-pink-rose/40 transition-all uppercase tracking-widest text-xs">
+                    Kirim Ucapan
                 </button>
             </form>
-            <div id="guestbook" class="mt-12 space-y-4 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
-                </div>
+            <div id="guestbook" class="mt-12 space-y-4 max-h-96 overflow-y-auto pr-2 custom-scrollbar"></div>
         </div>
     </section>
 
-    <section class="py-20 px-6 bg-dusty-rose/10 text-center">
-        <h2 class="font-serif text-3xl text-dark-rose mb-10">Amplop Digital</h2>
-        <div class="max-w-md mx-auto space-y-4">
-            <div class="bg-white p-6 rounded-2xl shadow-2xl border-t-4 border-dusty-rose">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/BRI_2020.svg" 
-             class="h-8 mx-auto mb-4" alt="BRI">
-                <p class="font-bold text-lg">647301010196535</p>
-                <p class="text-xs text-gray-500">BRI a.n M. Nur Alfarizi</p>
-                <button class="mt-2 text-dusty-rose text-xs font-bold copy-btn" data-rekening="647301010196535">SALIN NOMOR</button>
+    <section class="py-20 px-6 bg-gradient-theme/30 text-center">
+        <h2 class="font-serif text-3xl text-theme-dark mb-10 italic">Amplop Digital</h2>
+        <div class="max-w-md mx-auto space-y-5">
+            <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-sky-blue-dark">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/BRI_2020.svg" class="h-7 mx-auto mb-4" alt="BRI">
+                <p class="font-bold text-lg text-gray-700 tracking-wide">647301010196535</p>
+                <p class="text-xs text-gray-400 mt-1">BRI a.n M. Nur Alfarizi</p>
+                <button class="mt-3 text-sky-blue-dark text-xs font-bold tracking-wider copy-btn" data-rekening="647301010196535">SALIN NOMOR REKENING</button>
             </div>
-            <div class="bg-white p-6 rounded-2xl shadow-2xl border-t-4 border-dusty-rose">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" 
-             class="h-8 mx-auto mb-4" alt="BCA">
-                <p class="font-bold text-lg">7265096409</p>
-                <p class="text-xs text-gray-500">BCA a.n Melinda Elfina R</p>
-                <button class="mt-2 text-dusty-rose text-xs font-bold copy-btn" data-rekening="7265096409">SALIN NOMOR</button>
+            <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-pink-rose">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" class="h-7 mx-auto mb-4" alt="BCA">
+                <p class="font-bold text-lg text-gray-700 tracking-wide">7265096409</p>
+                <p class="text-xs text-gray-400 mt-1">BCA a.n Melinda Elfina R</p>
+                <button class="mt-3 text-pink-rose text-xs font-bold tracking-wider copy-btn" data-rekening="7265096409">SALIN NOMOR REKENING</button>
             </div>
         </div>
     </section>
 
-    <footer class="py-12 bg-white text-center text-gray-400 text-xs">
-        <p class="font-accent text-2xl text-dusty-rose mb-2">Alfarizi & Melinda</p>
-        <p>© 2026 Wedding Invitation.</p>
+    <footer class="py-12 bg-white/60 text-center text-gray-400 text-xs tracking-wider">
+        <p class="font-accent text-4xl text-pink-rose mb-3">Alfarizi & Melinda</p>
+        <p>© 2026 Wedding Invitation. All Rights Reserved.</p>
     </footer>
 </div>
      
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAo7yQJpGdgfYnou6NidFpsu1TqRq6CITk",
@@ -442,7 +459,6 @@ Mr. Fariz:
 
         let currentUser = null;
 
-        // Auth
         signInAnonymously(auth).catch(err => console.error("Auth failed", err));
 
         onAuthStateChanged(auth, (user) => {
@@ -452,7 +468,6 @@ Mr. Fariz:
             }
         });
 
-        // Load Messages
         function loadMessages() {
             const q = collection(db, "rsvp_messages");
             onSnapshot(q, (snapshot) => {
@@ -460,22 +475,20 @@ Mr. Fariz:
                 let messages = [];
                 snapshot.forEach(doc => messages.push(doc.data()));
                 
-                // Sort by time
                 messages.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
 
                 guestbook.innerHTML = messages.map(msg => `
-                    <div class="p-4 bg-champagne/20 rounded-xl border border-soft-rose text-left">
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="font-bold text-dark-rose text-sm">${msg.name}</span>
-                            <span class="text-[10px] px-2 py-0.5 bg-white rounded-full border">${msg.attendance}</span>
+                    <div class="p-4 bg-white/80 rounded-xl border border-pink-blush text-left shadow-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-bold text-theme-dark text-sm">${msg.name}</span>
+                            <span class="text-[9px] px-2 py-0.5 bg-sky-blue-light text-sky-blue-dark font-semibold rounded-full border border-sky-blue">${msg.attendance}</span>
                         </div>
-                        <p class="text-xs text-gray-600 italic">"${msg.message}"</p>
+                        <p class="text-xs text-gray-600 italic font-light">"${msg.message}"</p>
                     </div>
                 `).join('');
             });
         }
 
-        // Form Submit
         rsvpForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = document.getElementById('rsvp-submit');
@@ -500,26 +513,27 @@ Mr. Fariz:
                 showToast("Gagal mengirim", "error");
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerText = "Kirim Pesan";
+                submitBtn.innerText = "Kirim Ucapan";
             }
         });
     </script>
 
     <script>
-        // Fungsi Navigasi Slider
-            function moveSlide(direction) {
-                const slider = document.getElementById('slider');
-                const scrollAmount = slider.offsetWidth * 0.8; // Geser 80% dari lebar container
-    
-                if (direction === 'left') {
-                    slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-                } else {
-                    slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-                }
-            }
+        let playing = false;
+        const music = document.getElementById('bg-music');
+        const mBtn = document.getElementById('music-control');
 
-// Pastikan icon lucide di-render ulang jika perlu
-lucide.createIcons();
+        function moveSlide(direction) {
+            const slider = document.getElementById('slider');
+            const scrollAmount = slider.offsetWidth * 0.8; 
+
+            if (direction === 'left') {
+                slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+
         lucide.createIcons();
 
         function showToast(msg, type = "success") {
@@ -529,7 +543,6 @@ lucide.createIcons();
             setTimeout(() => t.classList.add('translate-y-20', 'opacity-0'), 3000);
         }
 
-        // Copy logic
         document.querySelectorAll('.copy-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 navigator.clipboard.writeText(btn.dataset.rekening);
@@ -537,69 +550,53 @@ lucide.createIcons();
             });
         });
 
-        // Music
-        const music = document.getElementById('bg-music');
-        const mBtn = document.getElementById('music-control');
-        let playing = false;
         mBtn.onclick = () => {
             playing ? music.pause() : music.play();
             mBtn.classList.toggle('animate-spin');
             playing = !playing;
         };
 
-        // Countdown
         const target = new Date("October 2, 2026 07:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
             const diff = target - now;
-            document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById('minutes').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById('seconds').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            if (diff >= 0) {
+                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('minutes').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('seconds').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            }
         }, 1000);
 
-        // Observer untuk semua jenis animasi
-const observerOptions = {
-    threshold: 0.1, // Animasi mulai jalan saat 10% elemen terlihat
-    rootMargin: "0px 0px -50px 0px" // Trigger sedikit sebelum elemen benar-benar muncul
-};
+        const observerOptions = {
+            threshold: 0.1, 
+            rootMargin: "0px 0px -50px 0px" 
+        };
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-        }
-    });
-}, observerOptions);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, observerOptions);
 
-// Daftarkan semua elemen yang ingin diberi animasi
-document.querySelectorAll('.fade-up, .zoom-in, .fade-in-section').forEach(el => {
-    observer.observe(el);
-});
+        document.querySelectorAll('.fade-up, .zoom-in, .fade-in-section').forEach(el => {
+            observer.observe(el);
+        });
+
         document.getElementById('btn-buka').addEventListener('click', function() {
-    // 1. Munculkan konten utama
-    document.getElementById('isi-undangan').style.display = 'block';
-    
-    // 2. Aktifkan scroll halaman
-    document.body.classList.remove('no-scroll');
-    
-    // 3. Putar Musik Otomatis
-    const music = document.getElementById('bg-music');
-    music.play();
-    
-    // 4. Update tampilan tombol musik (opsional)
-    const mBtn = document.getElementById('music-control');
-    mBtn.classList.add('animate-spin');
-    playing = true;
+            document.getElementById('isi-undangan').style.display = 'block';
+            document.body.classList.remove('no-scroll');
+            
+            music.play();
+            mBtn.classList.add('animate-spin');
+            playing = true;
 
-    // 5. Scroll otomatis ke section pertama (Cerita)
-    document.getElementById('cerita').scrollIntoView({ behavior: 'smooth' });
-    
-    // Tambahan: Refresh animasi Lucide Icons
-    lucide.createIcons();
-});
+            document.getElementById('cerita').scrollIntoView({ behavior: 'smooth' });  
+            lucide.createIcons();
+        });
     </script>
 </body>
 </html>
-
-
