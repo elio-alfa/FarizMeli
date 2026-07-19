@@ -88,9 +88,17 @@
         .custom-scrollbar::-webkit-scrollbar { width: 5px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--pink-rose); border-radius: 10px; }
 
+        /* Super Smooth Horizontal Slider & Swipe Styling */
         .slides-container {
             -ms-overflow-style: none;
             scrollbar-width: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            overscroll-behavior-x: contain;
+            cursor: grab;
+        }
+        .slides-container:active {
+            cursor: grabbing;
         }
         .slides-container::-webkit-scrollbar { 
             display: none;
@@ -98,6 +106,7 @@
         .slide-item {
             scroll-snap-align: center;
             flex-shrink: 0;
+            pointer-events: none; /* Mencegah drag gambar merusak swipe container */
         }
         
         .main-content {
@@ -106,6 +115,10 @@
 
         body.no-scroll {
             overflow: hidden;
+        }
+
+        .album-item {
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
     </style>
 </head>
@@ -122,23 +135,17 @@
 
     <!-- =========================================================
          SAMPUL / COVER UNDANGAN (VERSI CUSTOMISASI)
-         Silakan ubah background gambar, teks, atau susunannya di sini
          ========================================================= -->
     <section class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <!-- Ganti URL di bawah ini dengan gambar latar sampul pilihan Anda -->
-            <div class="w-full h-full bg-[url('https://images.unsplash.com/photo-1519225495810-7512c696505a?auto=format&fit=crop&q=80')] bg-cover bg-center brightness-[0.65]"></div>
+            <div class="w-full h-full bg-[url('https://drive.google.com/file/d/1LYGLI3tmgeCNTB1HJtHfPSyG_NbRUs24/view?usp=drive_link?auto=format&fit=crop&q=80')] bg-cover bg-center brightness-[0.65]"></div>
         </div>
         
-        <!-- Frame Hiasan Sampul Kustom Lembut -->
         <div class="absolute inset-6 border border-white/20 rounded-2xl z-5 pointer-events-none"></div>
 
         <div class="relative z-10 text-center text-white px-6 max-w-2xl">
             <p class="text-sm md:text-base tracking-[0.3em] uppercase mb-4 font-light opacity-90 animate__animated animate__fadeInDown">Pernikahan Impian</p>
-            
-            <!-- Nama Menggunakan Font Kaligrafi Pinyon Script Luwes -->
             <h1 class="font-accent text-6xl md:text-8xl my-2 text-pink-blush drop-shadow-md animate__animated animate__zoomIn">Alfarizi & Melinda</h1>
-            
             <p class="font-serif text-xl md:text-2xl tracking-wide italic mt-4 opacity-95 animate__animated animate__fadeInUp">Sabtu, 03 Oktober 2026</p>
             
             <div class="mt-12">
@@ -154,7 +161,7 @@
     <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/70 backdrop-blur-md px-6 py-3 rounded-full shadow-xl border border-sky-blue z-50 flex gap-8">
         <a href="#" class="text-theme-dark hover:scale-110 transition-transform"><i data-lucide="home" class="w-5 h-5"></i></a>
         <a href="#acara" class="text-theme-dark hover:scale-110 transition-transform"><i data-lucide="calendar" class="w-5 h-5"></i></a>
-        <a href="#galeri" class="text-theme-dark hover:scale-110 transition-transform"><i data-lucide="image" class="w-5 h-5"></i></a>
+        <a href="#foto-slide" class="text-theme-dark hover:scale-110 transition-transform"><i data-lucide="image" class="w-5 h-5"></i></a>
         <a href="#rsvp" class="text-theme-dark hover:scale-110 transition-transform"><i data-lucide="mail" class="w-5 h-5"></i></a>
     </nav>
 
@@ -199,7 +206,7 @@
         </div>
     </section>
 
-    <!-- Section Mempelai dengan Gradasi Warna Lembut -->
+    <!-- Section Mempelai -->
     <section class="py-20 bg-gradient-theme overflow-hidden shadow-inner">
         <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-around gap-12 text-center">
             <div class="fade-up"> 
@@ -222,6 +229,7 @@
         </div>
     </section>
 
+    <!-- Countdown -->
     <section class="py-20 bg-gradient-button text-white text-center shadow-lg">
         <div class="max-w-4xl mx-auto px-6">
             <h2 class="font-serif text-3xl mb-10 tracking-widest uppercase">Menghitung Hari Bahagia</h2>
@@ -246,6 +254,7 @@
         </div>
     </section>
 
+    <!-- Info Acara -->
     <section id="acara" class="py-20 px-6 bg-white/60">
         <div class="max-w-6xl mx-auto text-center">
             <h2 class="font-serif text-4xl md:text-5xl text-theme-dark mb-16 italic">Waktu & Tempat Acara</h2>
@@ -296,96 +305,113 @@
         </div>
     </section>
     
-<section id="foto-slide" class="py-20 bg-white/30 overflow-hidden">
-    <div class="max-w-6xl mx-auto px-6">
-        <div class="text-center mb-12 fade-up">
-            <h2 class="font-serif text-4xl text-theme-dark italic">Galeri Momen Bahagia</h2>
-            <p class="text-gray-500 mt-2 italic text-sm font-light">Geser untuk melihat lebih banyak memori kami</p>
-        </div>
+    <!-- 1. GALERI MOMEN BAHAGIA (SMOOTH SLIDER SWIPE & DRAG) -->
+    <section id="foto-slide" class="py-20 bg-white/30 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12 fade-up">
+                <span class="font-accent text-4xl text-pink-rose block mb-2">Our Highlights</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-theme-dark italic">Galeri Momen Bahagia</h2>
+                <p class="text-gray-500 mt-2 italic text-sm font-light">Swipe (geser) atau gunakan tombol panah untuk melihat potret sinematik terbaik kami</p>
+            </div>
 
-        <div class="relative group">
-            <div id="slider" class="slides-container flex overflow-x-auto gap-4 scroll-smooth snap-x snap-mandatory pb-4">
-                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
-                    <img src="galeri1.jpg" class="w-full h-full object-cover" alt="Momen 1">
+            <div class="relative group">
+                <div id="slider" class="slides-container flex overflow-x-auto gap-4 scroll-smooth snap-x snap-mandatory pb-4">
+                    <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
+                        <img src="highlight1.jpg" class="w-full h-full object-cover" alt="Highlight 1">
+                    </div>
+                    <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
+                        <img src="highlight2.jpg" class="w-full h-full object-cover" alt="Highlight 2">
+                    </div>
+                    <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
+                        <img src="highlight3.jpg" class="w-full h-full object-cover" alt="Highlight 3">
+                    </div>
+                    <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
+                        <img src="highlight4.jpg" class="w-full h-full object-cover" alt="Highlight 4">
+                    </div>
+                    <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
+                        <img src="highlight5.jpg" class="w-full h-full object-cover" alt="Highlight 5">
+                    </div>
                 </div>
-                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
-                    <img src="galeri2.jpg" class="w-full h-full object-cover" alt="Momen 2">
+
+                <button onclick="moveSlide('left')" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 p-2.5 rounded-full shadow-md z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <i data-lucide="chevron-left" class="text-theme-dark"></i>
+                </button>
+                <button onclick="moveSlide('right')" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 p-2.5 rounded-full shadow-md z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <i data-lucide="chevron-right" class="text-theme-dark"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 2. ALBUM KENANGAN (GRID MULTI-KATEGORI FOTO BANYAK) -->
+    <section id="galeri" class="py-20 px-6 bg-gradient-theme/20">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="mb-8 fade-up">
+                <span class="font-accent text-4xl text-pink-rose block mb-2">Our Memories</span>
+                <h2 class="font-serif text-4xl text-theme-dark italic">Album Kenangan</h2>
+                <p class="text-gray-500 mt-2 text-sm font-light">Gunakan filter tab di bawah untuk menjelajahi arsip file foto dokumentasi kami</p>
+            </div>
+
+            <!-- Filter Kategori Button -->
+            <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-10 fade-up">
+                <button onclick="filterAlbum('semua')" id="btn-semua" class="album-tab-btn px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all shadow border bg-gradient-button text-white">
+                    Semua Kenangan
+                </button>
+                <button onclick="filterAlbum('prewedding')" id="btn-prewedding" class="album-tab-btn px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all shadow border bg-white text-gray-600 border-gray-200 hover:bg-sky-blue-light">
+                    Prewedding
+                </button>
+                <button onclick="filterAlbum('lamaran')" id="btn-lamaran" class="album-tab-btn px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all shadow border bg-white text-gray-600 border-gray-200 hover:bg-sky-blue-light">
+                    Momen Lamaran
+                </button>
+                <button onclick="filterAlbum('keseharian')" id="btn-keseharian" class="album-tab-btn px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all shadow border bg-white text-gray-600 border-gray-200 hover:bg-sky-blue-light">
+                    Cerita Keseharian
+                </button>
+            </div>
+
+            <!-- Grid Items Ratusan Foto Beda-Beda -->
+            <div id="album-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+                <!-- Prewedding -->
+                <div class="album-item prewedding aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="prewed1.jpg" class="w-full h-full object-cover rounded-lg zoom-in" alt="Prewedding 1">
                 </div>
-                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
-                    <img src="galeri3.jpg" class="w-full h-full object-cover" alt="Momen 3">
+                <div class="album-item prewedding aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="prewed2.jpg" class="w-full h-full object-cover rounded-lg zoom-in" alt="Prewedding 2">
                 </div>
-                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
-                    <img src="galeri4.jpg" class="w-full h-full object-cover" alt="Momen 4">
+                <div class="album-item prewedding aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="prewed3.jpg" class="w-full h-full object-cover rounded-lg zoom-in" alt="Prewedding 3">
                 </div>
-                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
-                    <img src="galeri5.jpg" class="w-full h-full object-cover" alt="Momen 5">
+                <!-- Lamaran -->
+                <div class="album-item lamaran aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="lamaran1.jpg" class="w-full h-full object-cover rounded-lg zoom-in" alt="Lamaran 1">
                 </div>
-                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
-                    <img src="galeri6.jpg" class="w-full h-full object-cover" alt="Momen 6">
+                <div class="album-item lamaran aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="lamaran2.jpg" class="w-full h-full object-cover rounded-lg zoom-in" alt="Lamaran 2">
                 </div>
-                <div class="slide-item w-[85%] md:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-white">
-                    <img src="galeri7.jpg" class="w-full h-full object-cover" alt="Momen 7">
+                <!-- Keseharian -->
+                <div class="album-item keseharian aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="daily1.jpg" class="w-full h-full object-cover rounded-lg zoom-in" alt="Keseharian 1">
+                </div>
+                <div class="album-item keseharian aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="daily2.jpg" class="w-full h-full object-cover rounded-lg zoom-in" alt="Keseharian 2">
+                </div>
+                <div class="album-item keseharian aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
+                    <img src="daily3.jpg" class="w-full h-full object-cover rounded-lg zoom-in" alt="Keseharian 3">
                 </div>
             </div>
 
-            <button onclick="moveSlide('left')" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 p-2.5 rounded-full shadow-md z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                <i data-lucide="chevron-left" class="text-theme-dark"></i>
-            </button>
-            <button onclick="moveSlide('right')" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 p-2.5 rounded-full shadow-md z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                <i data-lucide="chevron-right" class="text-theme-dark"></i>
-            </button>
-        </div>
-
-        <!-- =========================================================
-             FORM AKSES LINK GOOGLE DRIVE (UPLOAD FOTO TAMU)
-             ========================================================= -->
-        <div class="mt-16 max-w-xl mx-auto p-8 bg-gradient-theme rounded-3xl border border-white shadow-xl text-center fade-in-section">
-            <i data-lucide="cloud-lightning" class="mx-auto text-sky-blue-dark w-8 h-8 mb-3"></i>
-            <h3 class="font-serif text-2xl text-theme-dark font-bold mb-2">Bagikan Momen Bahagia Anda</h3>
-            <p class="text-xs text-gray-600 mb-6 font-light leading-relaxed">Punya foto keseruan atau kenangan manis bersama kami selama acara? Unggah file foto dokumentasi terbaik Anda ke dalam folder Google Drive bersama kami.</p>
-            <!-- Ganti href dengan link tautan folder Google Drive Anda asli -->
-            <a href="https://drive.google.com" target="_blank" class="px-8 py-3 bg-gradient-button text-white font-semibold text-xs tracking-widest uppercase rounded-full inline-flex items-center gap-3 shadow-md hover:scale-105 transition-all">
-                <i data-lucide="upload-cloud" class="w-4 h-4"></i> Upload Foto Kalian Disini
-            </a>
-        </div>
-    </div>
-</section>
-    
-    <section id="galeri" class="py-20 px-6 bg-gradient-theme/20">
-        <div class="max-w-6xl mx-auto text-center">
-            <h2 class="font-serif text-4xl text-theme-dark mb-12 italic">Album Kenangan</h2>
-            <div class="grid grid-cols-3 gap-3 md:gap-4">
-                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
-                    <img src="galeri1.jpg" class="w-full h-full object-cover rounded-lg zoom-in" alt="Galeri 1">
-                </div>
-                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
-                    <img src="galeri2.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 100ms;" alt="Galeri 2">
-                </div>
-                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
-                    <img src="galeri3.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 200ms;" alt="Galeri 3">
-                 </div>
-                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
-                    <img src="galeri4.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 300ms;" alt="Galeri 4">
-                </div>
-                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
-                    <img src="galeri5.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 400ms;" alt="Galeri 5">
-                </div>
-                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
-                    <img src="galeri6.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 500ms;" alt="Galeri 6">
-                 </div>
-                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
-                    <img src="galeri7.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 500ms;" alt="Galeri 7">
-                 </div>
-                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
-                    <img src="galeri8.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 500ms;" alt="Galeri 8">
-                 </div>
-                <div class="aspect-square bg-white rounded-xl overflow-hidden shadow p-1 fade-in-section">
-                    <img src="galeri9.jpg" class="w-full h-full object-cover rounded-lg zoom-in" style="transition-delay: 500ms;" alt="Galeri 9">
-                 </div>
+            <!-- Google Drive Upload Button -->
+            <div class="mt-16 max-w-xl mx-auto p-8 bg-gradient-theme rounded-3xl border border-white shadow-xl text-center fade-in-section">
+                <i data-lucide="cloud-lightning" class="mx-auto text-sky-blue-dark w-8 h-8 mb-3"></i>
+                <h3 class="font-serif text-2xl text-theme-dark font-bold mb-2">Bagikan Momen Bahagia Anda</h3>
+                <p class="text-xs text-gray-600 mb-6 font-light leading-relaxed">Punya foto keseruan atau kenangan manis bersama kami selama acara? Unggah file foto dokumentasi terbaik Anda ke dalam folder Google Drive bersama kami.</p>
+                <a href="https://drive.google.com" target="_blank" class="px-8 py-3 bg-gradient-button text-white font-semibold text-xs tracking-widest uppercase rounded-full inline-flex items-center gap-3 shadow-md hover:scale-105 transition-all">
+                    <i data-lucide="upload-cloud" class="w-4 h-4"></i> Upload Foto Kalian Disini
+                </a>
             </div>
         </div>
     </section>
 
+    <!-- RSVP & Guestbook -->
     <section id="rsvp" class="py-20 px-6">
         <div class="max-w-2xl mx-auto bg-white/90 p-8 md:p-12 rounded-[2rem] shadow-2xl border border-pink-blush">
             <h2 class="font-serif text-3xl text-theme-dark text-center mb-8 italic">RSVP & Ucapan Doa</h2>
@@ -413,6 +439,7 @@
         </div>
     </section>
 
+    <!-- Digital Kado / Amplop -->
     <section class="py-20 px-6 bg-gradient-theme/30 text-center">
         <h2 class="font-serif text-3xl text-theme-dark mb-10 italic">Amplop Digital</h2>
         <div class="max-w-md mx-auto space-y-5">
@@ -437,6 +464,7 @@
     </footer>
 </div>
      
+    <!-- Firebase Script Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -518,11 +546,13 @@
         });
     </script>
 
+    <!-- Main Global Logic (Slider, Navigation, Swipe Detection, Audio) -->
     <script>
         let playing = false;
         const music = document.getElementById('bg-music');
         const mBtn = document.getElementById('music-control');
 
+        // Fungsi Manual Button Navigasi Slider Utama
         function moveSlide(direction) {
             const slider = document.getElementById('slider');
             const scrollAmount = slider.offsetWidth * 0.8; 
@@ -534,6 +564,67 @@
             }
         }
 
+        // --- SISTEM DETEKSI SWIPE DAN DRAG MOUSE HALUS ---
+        const sliderEl = document.getElementById('slider');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        sliderEl.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - sliderEl.offsetLeft;
+            scrollLeft = sliderEl.scrollLeft;
+            sliderEl.style.scrollBehavior = 'auto'; // Matikan smooth transisi sementara saat di-drag manual
+        });
+        sliderEl.addEventListener('mouseleave', () => {
+            isDown = false;
+        });
+        sliderEl.addEventListener('mouseup', () => {
+            isDown = false;
+            sliderEl.style.scrollBehavior = 'smooth'; // Aktifkan kembali smooth snap
+        });
+        sliderEl.addEventListener('mousemove', (e) => {
+            if(!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - sliderEl.offsetLeft;
+            const walk = (x - startX) * 1.5; // Rasio kecepatan pergeseran kursor
+            sliderEl.scrollLeft = scrollLeft - walk;
+        });
+
+        // Fungsi Sistem Filter Kategori Album Kenangan
+        function filterAlbum(category) {
+            const items = document.querySelectorAll('.album-item');
+            const buttons = document.querySelectorAll('.album-tab-btn');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-gradient-button', 'text-white');
+                btn.classList.add('bg-white', 'text-gray-600', 'border-gray-200', 'hover:bg-sky-blue-light');
+            });
+            
+            const activeBtn = document.getElementById(`btn-${category}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-gray-600', 'border-gray-200', 'hover:bg-sky-blue-light');
+                activeBtn.classList.add('bg-gradient-button', 'text-white');
+            }
+
+            items.forEach(item => {
+                if (category === 'semua' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'scale(1)';
+                    }, 50);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+
+        // Render Awal Lucide Icons
         lucide.createIcons();
 
         function showToast(msg, type = "success") {
@@ -543,6 +634,7 @@
             setTimeout(() => t.classList.add('translate-y-20', 'opacity-0'), 3000);
         }
 
+        // Salin nomor rekening digital kado
         document.querySelectorAll('.copy-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 navigator.clipboard.writeText(btn.dataset.rekening);
@@ -550,12 +642,14 @@
             });
         });
 
+        // Kontrol Musik
         mBtn.onclick = () => {
             playing ? music.pause() : music.play();
             mBtn.classList.toggle('animate-spin');
             playing = !playing;
         };
 
+        // Realtime Countdown Timer
         const target = new Date("October 2, 2026 07:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
@@ -569,6 +663,7 @@
             }
         }, 1000);
 
+        // Elemen On-Scroll Animation Trigger (Intersection Observer)
         const observerOptions = {
             threshold: 0.1, 
             rootMargin: "0px 0px -50px 0px" 
@@ -586,6 +681,7 @@
             observer.observe(el);
         });
 
+        // Action Buka Undangan Utama
         document.getElementById('btn-buka').addEventListener('click', function() {
             document.getElementById('isi-undangan').style.display = 'block';
             document.body.classList.remove('no-scroll');
@@ -593,6 +689,9 @@
             music.play();
             mBtn.classList.add('animate-spin');
             playing = true;
+
+            // Inisialisasi tampilan awal semua item album agar ter-render sempurna
+            filterAlbum('semua');
 
             document.getElementById('cerita').scrollIntoView({ behavior: 'smooth' });  
             lucide.createIcons();
