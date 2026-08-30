@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -419,6 +419,17 @@
                     <label class="block text-xs font-semibold mb-2 uppercase tracking-widest text-gray-500">Nama Lengkap</label>
                     <input type="text" id="rsvp-name" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-rose outline-none font-light">
                 </div>
+                <!-- Input Nama Lengkap -->
+                <div>
+                    <label class="block text-xs font-semibold mb-2 uppercase tracking-widest text-gray-500">Nama Lengkap</label>
+                    <input type="text" id="rsvp-name" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-rose outline-none font-light">
+                </div>
+
+            <!-- TAMBAHKAN INPUT EMAIL DI SINI -->
+                <div>
+                    <label class="block text-xs font-semibold mb-2 uppercase tracking-widest text-gray-500">Email (Opsional / Wajib)</label>
+                    <input type="email" id="rsvp-email" placeholder="contoh@email.com" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-rose outline-none font-light">
+                </div>
                 <div>
                     <label class="block text-xs font-semibold mb-2 uppercase tracking-widest text-gray-500">Konfirmasi Kehadiran</label>
                     <select id="rsvp-attendance" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-rose outline-none font-light bg-white">
@@ -476,84 +487,109 @@
     <!-- Firebase Script Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyAo7yQJpGdgfYnou6NidFpsu1TqRq6CITk",
-            authDomain: "website-undangan-951ce.firebaseapp.com",
-            projectId: "website-undangan-951ce",
-            storageBucket: "website-undangan-951ce.appspot.com",
-            messagingSenderId: "731474935634",
-            appId: "1:731474935634:web:15f0aa8045e84d851d048b",
-            measurementId: "G-VLR28ZMMKP"
-        };
+const firebaseConfig = {
+    apiKey: "AIzaSyAo7yQJpGdgfYnou6NidFpsu1TqRq6CITk",
+    authDomain: "website-undangan-951ce.firebaseapp.com",
+    projectId: "website-undangan-951ce",
+    storageBucket: "website-undangan-951ce.appspot.com",
+    messagingSenderId: "731474935634",
+    appId: "1:731474935634:web:15f0aa8045e84d851d048b",
+    measurementId: "G-VLR28ZMMKP"
+};
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const rsvpForm = document.getElementById('rsvp-form');
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-        let currentUser = null;
+// Autentikasi anonim untuk akses kirim pesan
+signInAnonymously(auth).catch((error) => console.error("Auth error:", error));
 
-        signInAnonymously(auth).catch(err => console.error("Auth failed", err));
+const rsvpForm = document.getElementById("rsvp-form");
+const guestbookContainer = document.getElementById("guestbook");
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user;
-                loadMessages();
-            }
+// Simpan Pesan Baru ke Firestore
+rsvpForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("rsvp-name").value.trim();
+    const email = document.getElementById("rsvp-email").value.trim(); // Ambil input email
+    const attendance = document.getElementById("rsvp-attendance").value;
+    const message = document.getElementById("rsvp-message").value.trim();
+    const submitBtn = document.getElementById("rsvp-submit");
+
+    if (!name || !message) return;
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Mengirim...";
+
+    try {
+        await addDoc(collection(db, "wishes"), {
+            name: name,
+            email: email || "-", // Disimpan ke field 'email' di database
+            attendance: attendance,
+            message: message,
+            timestamp: serverTimestamp()
         });
 
-        function loadMessages() {
-            const q = collection(db, "rsvp_messages");
-            onSnapshot(q, (snapshot) => {
-                const guestbook = document.getElementById('guestbook');
-                let messages = [];
-                snapshot.forEach(doc => messages.push(doc.data()));
-                
-                messages.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+        rsvpForm.reset();
+        showToast("Ucapan & doa berhasil terkirim!");
+    } catch (error) {
+        console.error("Gagal menyimpan data:", error);
+        showToast("Gagal mengirim pesan, coba lagi nanti.");
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Kirim Ucapan";
+    }
+});
 
-                guestbook.innerHTML = messages.map(msg => `
-                    <div class="p-4 bg-white/80 rounded-xl border border-pink-blush text-left shadow-sm">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="font-bold text-theme-dark text-sm">${msg.name}</span>
-                            <span class="text-[9px] px-2 py-0.5 bg-sky-blue-light text-sky-blue-dark font-semibold rounded-full border border-sky-blue">${msg.attendance}</span>
-                        </div>
-                        <p class="text-xs text-gray-600 italic font-light">"${msg.message}"</p>
-                    </div>
-                `).join('');
-            });
-        }
+// Realtime listener untuk menampilkan daftar ucapan
+const q = query(collection(db, "wishes"), orderBy("timestamp", "desc"));
+onSnapshot(q, (snapshot) => {
+    guestbookContainer.innerHTML = "";
+    snapshot.forEach((doc) => {
+        const data = doc.data();
+        
+        const card = document.createElement("div");
+        card.className = "bg-white/80 p-4 rounded-xl border border-gray-100 shadow-sm text-left";
+        
+        card.innerHTML = `
+            <div class="flex justify-between items-center mb-1">
+                <h4 class="font-bold text-gray-800 text-sm">${escapeHtml(data.name)}</h4>
+                <span class="text-[10px] px-2 py-0.5 rounded-full ${data.attendance === 'Hadir' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${escapeHtml(data.attendance)}</span>
+            </div>
+            <p class="text-xs text-gray-600 font-light mt-1">${escapeHtml(data.message)}</p>
+        `;
+        
+        guestbookContainer.appendChild(card);
+    });
+});
 
-        rsvpForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const submitBtn = document.getElementById('rsvp-submit');
-            
-            if (!currentUser) return showToast("Menghubungkan...", "loading");
+// Sanitasi Input HTML (Mencegah XSS)
+function escapeHtml(text) {
+    if (!text) return "";
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
-            const data = {
-                name: document.getElementById('rsvp-name').value,
-                attendance: document.getElementById('rsvp-attendance').value,
-                message: document.getElementById('rsvp-message').value,
-                timestamp: serverTimestamp()
-            };
-
-            submitBtn.disabled = true;
-            submitBtn.innerText = "Mengirim...";
-
-            try {
-                await addDoc(collection(db, "rsvp_messages"), data);
-                showToast("Pesan Terkirim! 💌");
-                rsvpForm.reset();
-            } catch (err) {
-                showToast("Gagal mengirim", "error");
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = "Kirim Ucapan";
-            }
-        });
-    </script>
+// Helper Toast Notification
+function showToast(msg) {
+    const toast = document.getElementById("toast");
+    if (!toast) return;
+    toast.innerText = msg;
+    toast.classList.remove("opacity-0", "translate-y-20");
+    toast.classList.add("opacity-100", "translate-y-0");
+    setTimeout(() => {
+        toast.classList.remove("opacity-100", "translate-y-0");
+        toast.classList.add("opacity-0", "translate-y-20");
+    }, 3000);
+}
 
     <!-- Main Global Logic (Slider, Navigation, Swipe Detection, Audio) -->
     <script>
