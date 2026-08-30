@@ -1113,7 +1113,7 @@
                 submitBtn.innerText = "Mengirim...";
 
                 try {
-                    await addDoc(collection(db, "wishes"), {
+                    await addDoc(collection(db, "rsvp_messages"), {
                         name: name,
                         email: email || "-",
                         attendance: attendance,
@@ -1135,7 +1135,7 @@
 
         // 9. Firebase Realtime Listener untuk Guestbook
         if (guestbookContainer) {
-            const q = query(collection(db, "wishes"), orderBy("timestamp", "desc"));
+            const q = query(collection(db, "rsvp_messages"), orderBy("timestamp", "desc"));
             onSnapshot(q, (snapshot) => {
                 guestbookContainer.innerHTML = "";
                 snapshot.forEach((doc) => {
