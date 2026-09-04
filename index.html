@@ -486,8 +486,18 @@
          JAVASCRIPT LOGIC INTERAKTIF
          ========================================================= -->
     <script>
+       <!-- SDK Firebase (Harus Dimuat Sebelum Script Logika) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <!-- =========================================================
+         JAVASCRIPT LOGIC INTERAKTIF
+         ========================================================= -->
+    <script>
         // Initialize Lucide Icons
-        lucide.createIcons();
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
 
         const bgMusic = document.getElementById('bg-music');
         const musicControl = document.getElementById('music-control');
@@ -496,39 +506,52 @@
 
         // Toggle Audio
         function toggleAudio() {
+            if (!bgMusic) return;
             if (isPlaying) {
                 bgMusic.pause();
-                musicControl.classList.remove('animate-spin-slow', 'animate-bounce');
-                musicIcon.setAttribute('data-lucide', 'music-2');
+                if (musicControl) musicControl.classList.remove('animate-spin-slow', 'animate-bounce');
+                if (musicIcon) musicIcon.setAttribute('data-lucide', 'music-2');
             } else {
                 bgMusic.play().then(() => {
-                    musicControl.classList.add('animate-spin-slow');
-                    musicControl.classList.remove('animate-bounce');
-                    musicIcon.setAttribute('data-lucide', 'music');
+                    if (musicControl) {
+                        musicControl.classList.add('animate-spin-slow');
+                        musicControl.classList.remove('animate-bounce');
+                    }
+                    if (musicIcon) musicIcon.setAttribute('data-lucide', 'music');
                 }).catch(err => console.log('Autoplay blocked:', err));
             }
             isPlaying = !isPlaying;
-            lucide.createIcons();
+            if (typeof lucide !== 'undefined') lucide.createIcons();
         }
 
-        musicControl.addEventListener('click', toggleAudio);
+        if (musicControl) {
+            musicControl.addEventListener('click', toggleAudio);
+        }
 
         // Buka Undangan Button Event
-        document.getElementById('btn-buka').addEventListener('click', function() {
-            document.body.classList.remove('no-scroll');
-            document.getElementById('isi-undangan').style.display = 'block';
-            
-            toggleAudio(); // Jalankan musik otomatis
+        const btnBuka = document.getElementById('btn-buka');
+        if (btnBuka) {
+            btnBuka.addEventListener('click', function() {
+                document.body.classList.remove('no-scroll');
+                const isiUndangan = document.getElementById('isi-undangan');
+                if (isiUndangan) isiUndangan.style.display = 'block';
+                
+                toggleAudio(); // Jalankan musik otomatis
 
-            window.scrollTo({
-                top: window.innerHeight,
-                behavior: 'smooth'
+                window.scrollTo({
+                    top: window.innerHeight,
+                    behavior: 'smooth'
+                });
             });
-        });
+        }
 
         // Toast Notification System
         function showToast(message) {
             const toast = document.getElementById('toast');
+            if (!toast) {
+                alert(message);
+                return;
+            }
             toast.innerText = message;
             toast.classList.remove('translate-y-20', 'opacity-0');
             toast.classList.add('translate-y-0', 'opacity-100');
@@ -552,6 +575,7 @@
         // Slider Horizontal Navigation
         function moveSlide(direction) {
             const slider = document.getElementById('slider');
+            if (!slider) return;
             const scrollAmount = slider.clientWidth * 0.8;
             if (direction === 'left') {
                 slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
@@ -598,39 +622,17 @@
                 const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-                document.getElementById("days").innerText = days < 10 ? '0' + days : days;
-                document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
-                document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
-                document.getElementById("seconds").innerText = seconds < 10 ? '0' + seconds : seconds;
+                const elDays = document.getElementById("days");
+                const elHours = document.getElementById("hours");
+                const elMinutes = document.getElementById("minutes");
+                const elSeconds = document.getElementById("seconds");
+
+                if (elDays) elDays.innerText = days < 10 ? '0' + days : days;
+                if (elHours) elHours.innerText = hours < 10 ? '0' + hours : hours;
+                if (elMinutes) elMinutes.innerText = minutes < 10 ? '0' + minutes : minutes;
+                if (elSeconds) elSeconds.innerText = seconds < 10 ? '0' + seconds : seconds;
             }
         }, 1000);
-
-        // RSVP Guestbook Logic
-        const rsvpForm = document.getElementById('rsvp-form');
-        const guestbook = document.getElementById('guestbook');
-
-        rsvpForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('rsvp-name').value;
-            const attendance = document.getElementById('rsvp-attendance').value;
-            const message = document.getElementById('rsvp-message').value;
-
-            const badgeColor = attendance === 'Hadir' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700';
-
-            const card = document.createElement('div');
-            card.className = "p-4 bg-sky-blue-light/50 rounded-xl border border-sky-blue/30 shadow-sm animate__animated animate__fadeInUp";
-            card.innerHTML = `
-                <div class="flex justify-between items-center mb-2">
-                    <h5 class="font-bold text-sm text-theme-dark">${name}</h5>
-                    <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold ${badgeColor}">${attendance}</span>
-                </div>
-                <p class="text-xs text-gray-600 italic">"${message}"</p>
-            `;
-
-            guestbook.prepend(card);
-            rsvpForm.reset();
-            showToast('Terima kasih! Ucapan Anda telah terkirim.');
-        });
 
         // Scroll Animation Observer
         const observerOptions = { threshold: 0.15 };
@@ -647,116 +649,116 @@
         });
 
         // ==========================================
-// 1. KONFIGURASI FIREBASE PROYEKMU
-// ==========================================
-const firebaseConfig = {
-    apiKey: "AIzaSyAo7yQJpGdgfYnou6NidFpsu1TqRq6CITk",
-    authDomain: "website-undangan-951ce.firebaseapp.com",
-    projectId: "website-undangan-951ce",
-    storageBucket: "website-undangan-951ce.firebasestorage.app",
-    messagingSenderId: "731474935634",
-    appId: "1:731474935634:web:15f0aa8045e84d851d048b"
-    measurementId: "G-VLR28ZMMKP"
-};
+        // KONFIGURASI & LOGIKA FIREBASE
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyAo7yQJpGdgfYnou6NidFpsu1TqRq6CITk",
+            authDomain: "website-undangan-951ce.firebaseapp.com",
+            projectId: "website-undangan-951ce",
+            storageBucket: "website-undangan-951ce.firebasestorage.app",
+            messagingSenderId: "731474935634",
+            appId: "1:731474935634:web:15f0aa8045e84d851d048b", // Koma sudah ditambahkan di sini
+            measurementId: "G-VLR28ZMMKP"
+        };
 
-// Inisialisasi Firebase & Firestore
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
-const db = firebase.firestore();
-const rsvpRef = db.collection('rsvp_messages');
+        // Inisialisasi Firebase & Firestore
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore();
+        const rsvpRef = db.collection('rsvp_messages');
 
-// Elemen DOM
-const rsvpForm = document.getElementById('rsvp-form');
-const guestbook = document.getElementById('guestbook');
-const submitBtn = document.getElementById('rsvp-submit');
+        // Elemen DOM RSVP
+        const rsvpForm = document.getElementById('rsvp-form');
+        const guestbook = document.getElementById('guestbook');
+        const submitBtn = document.getElementById('rsvp-submit');
 
-// Helper untuk mencegah XSS injection (keamanan ucapan)
-function escapeHtml(text) {
-    if (!text) return '';
-    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-}
+        // Helper XSS Protection
+        function escapeHtml(text) {
+            if (!text) return '';
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
 
-// ==========================================
-// 2. FUNGSI MENYIMPAN UCAPAN KE FIRESTORE
-// ==========================================
-rsvpForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+        // SIMPAN UCAPAN KE FIRESTORE
+        if (rsvpForm) {
+            rsvpForm.addEventListener('submit', function(e) {
+                e.preventDefault();
 
-    const nameInput = document.getElementById('rsvp-name').value.trim();
-    const emailInput = document.getElementById('rsvp-email').value.trim();
-    const attendanceInput = document.getElementById('rsvp-attendance').value;
-    const messageInput = document.getElementById('rsvp-message').value.trim();
+                const nameInput = document.getElementById('rsvp-name').value.trim();
+                const emailInput = document.getElementById('rsvp-email').value.trim();
+                const attendanceInput = document.getElementById('rsvp-attendance').value;
+                const messageInput = document.getElementById('rsvp-message').value.trim();
 
-    if (!nameInput || !messageInput) {
-        showToast('Mohon isi nama dan pesan doa Anda.');
-        return;
-    }
+                if (!nameInput || !messageInput) {
+                    showToast('Mohon isi nama dan pesan doa Anda.');
+                    return;
+                }
 
-    // Ubah tampilan tombol saat proses kirim
-    submitBtn.innerText = "Mengirim...";
-    submitBtn.disabled = true;
+                if (submitBtn) {
+                    submitBtn.innerText = "Mengirim...";
+                    submitBtn.disabled = true;
+                }
 
-    // Simpan ke Firestore sesuai struktur field database kamu
-    rsvpRef.add({
-        name: nameInput,
-        email: emailInput || '-',
-        attendance: attendanceInput,
-        message: messageInput,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    })
-    .then(() => {
-        showToast('Terima kasih! Ucapan Anda berhasil tersimpan.');
-        rsvpForm.reset();
-    })
-    .catch((error) => {
-        console.error("Gagal menyimpan data:", error);
-        showToast('Gagal menyimpan ucapan. Periksa aturan keamanan Firestore.');
-    })
-    .finally(() => {
-        submitBtn.innerText = "Kirim Ucapan";
-        submitBtn.disabled = false;
-    });
-});
+                rsvpRef.add({
+                    name: nameInput,
+                    email: emailInput || '-',
+                    attendance: attendanceInput,
+                    message: messageInput,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                })
+                .then(() => {
+                    showToast('Terima kasih! Ucapan Anda berhasil tersimpan.');
+                    rsvpForm.reset();
+                })
+                .catch((error) => {
+                    console.error("Gagal menyimpan data:", error);
+                    showToast('Gagal menyimpan ucapan. Periksa aturan keamanan Firestore.');
+                })
+                .finally(() => {
+                    if (submitBtn) {
+                        submitBtn.innerText = "Kirim Ucapan";
+                        submitBtn.disabled = false;
+                    }
+                });
+            });
+        }
 
-// ==========================================
-// 3. FUNGSI READ REAL-TIME DARI FIRESTORE
-// ==========================================
-rsvpRef.orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
-    guestbook.innerHTML = '';
+        // BACA DATA REAL-TIME DARI FIRESTORE
+        if (guestbook) {
+            rsvpRef.orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
+                guestbook.innerHTML = '';
 
-    if (snapshot.empty) {
-        guestbook.innerHTML = '<p class="text-xs text-gray-400 text-center italic py-4">Belum ada ucapan. Jadilah yang pertama memberikan doa!</p>';
-        return;
-    }
+                if (snapshot.empty) {
+                    guestbook.innerHTML = '<p class="text-xs text-gray-400 text-center italic py-4">Belum ada ucapan. Jadilah yang pertama memberikan doa!</p>';
+                    return;
+                }
 
-    snapshot.forEach((doc) => {
-        const data = doc.data();
-        
-        // Atur badge warna kehadiran
-        const isHadir = data.attendance === 'Hadir';
-        const badgeStyle = isHadir 
-            ? 'bg-green-100 text-green-700 border-green-200' 
-            : 'bg-red-100 text-red-700 border-red-200';
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const isHadir = data.attendance === 'Hadir';
+                    const badgeStyle = isHadir 
+                        ? 'bg-green-100 text-green-700 border-green-200' 
+                        : 'bg-red-100 text-red-700 border-red-200';
 
-        const card = document.createElement('div');
-        card.className = "p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-sky-blue/30 shadow-sm animate__animated animate__fadeInUp mb-3";
-        card.innerHTML = `
-            <div class="flex justify-between items-center mb-1.5">
-                <h5 class="font-bold text-sm text-theme-dark">${escapeHtml(data.name)}</h5>
-                <span class="text-[10px] px-2.5 py-0.5 rounded-full font-semibold border ${badgeStyle}">
-                    ${escapeHtml(data.attendance)}
-                </span>
-            </div>
-            <p class="text-xs text-gray-600 italic leading-relaxed">"${escapeHtml(data.message)}"</p>
-        `;
+                    const card = document.createElement('div');
+                    card.className = "p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-sky-blue/30 shadow-sm animate__animated animate__fadeInUp mb-3";
+                    card.innerHTML = `
+                        <div class="flex justify-between items-center mb-1.5">
+                            <h5 class="font-bold text-sm text-theme-dark">${escapeHtml(data.name)}</h5>
+                            <span class="text-[10px] px-2.5 py-0.5 rounded-full font-semibold border ${badgeStyle}">
+                                ${escapeHtml(data.attendance)}
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-600 italic leading-relaxed">"${escapeHtml(data.message)}"</p>
+                    `;
 
-        guestbook.appendChild(card);
-    });
-}, (error) => {
-    console.error("Gagal mengambil data real-time:", error);
-    guestbook.innerHTML = '<p class="text-xs text-red-400 text-center py-4">Gagal memuat ucapan. Pastikan Rules Firestore mengizinkan akses read.</p>';
-});
+                    guestbook.appendChild(card);
+                });
+            }, (error) => {
+                console.error("Gagal mengambil data real-time:", error);
+                guestbook.innerHTML = '<p class="text-xs text-red-400 text-center py-4">Gagal memuat ucapan. Pastikan Rules Firestore mengizinkan akses read.</p>';
+            });
+        }
     </script>
 </body>
 </html>
