@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
-
+    
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Undangan Pernikahan - Alfarizi & Melinda</title>
+
+     <!-- Firebase App & Firestore SDK (v9/v10 Compat Mode) -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
@@ -103,7 +108,7 @@
         .animate-spin-slow { animation: spin-slow 4s linear infinite; }
     </style>
 </head>
-
+    
 <body class="no-scroll">
 
     <!-- Toast Notification -->
@@ -640,6 +645,118 @@
         document.querySelectorAll('.fade-up, .zoom-in, .fade-in-section').forEach(el => {
             observer.observe(el);
         });
+
+        // ==========================================
+// 1. KONFIGURASI FIREBASE PROYEKMU
+// ==========================================
+const firebaseConfig = {
+    apiKey: "AIzaSyAo7yQJpGdgfYnou6NidFpsu1TqRq6CITk",
+    authDomain: "website-undangan-951ce.firebaseapp.com",
+    projectId: "website-undangan-951ce",
+    storageBucket: "website-undangan-951ce.firebasestorage.app",
+    messagingSenderId: "731474935634",
+    appId: "1:731474935634:web:15f0aa8045e84d851d048b"
+    measurementId: "G-VLR28ZMMKP"
+};
+
+// Inisialisasi Firebase & Firestore
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.firestore();
+const rsvpRef = db.collection('rsvp_messages');
+
+// Elemen DOM
+const rsvpForm = document.getElementById('rsvp-form');
+const guestbook = document.getElementById('guestbook');
+const submitBtn = document.getElementById('rsvp-submit');
+
+// Helper untuk mencegah XSS injection (keamanan ucapan)
+function escapeHtml(text) {
+    if (!text) return '';
+    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
+
+// ==========================================
+// 2. FUNGSI MENYIMPAN UCAPAN KE FIRESTORE
+// ==========================================
+rsvpForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const nameInput = document.getElementById('rsvp-name').value.trim();
+    const emailInput = document.getElementById('rsvp-email').value.trim();
+    const attendanceInput = document.getElementById('rsvp-attendance').value;
+    const messageInput = document.getElementById('rsvp-message').value.trim();
+
+    if (!nameInput || !messageInput) {
+        showToast('Mohon isi nama dan pesan doa Anda.');
+        return;
+    }
+
+    // Ubah tampilan tombol saat proses kirim
+    submitBtn.innerText = "Mengirim...";
+    submitBtn.disabled = true;
+
+    // Simpan ke Firestore sesuai struktur field database kamu
+    rsvpRef.add({
+        name: nameInput,
+        email: emailInput || '-',
+        attendance: attendanceInput,
+        message: messageInput,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+        showToast('Terima kasih! Ucapan Anda berhasil tersimpan.');
+        rsvpForm.reset();
+    })
+    .catch((error) => {
+        console.error("Gagal menyimpan data:", error);
+        showToast('Gagal menyimpan ucapan. Periksa aturan keamanan Firestore.');
+    })
+    .finally(() => {
+        submitBtn.innerText = "Kirim Ucapan";
+        submitBtn.disabled = false;
+    });
+});
+
+// ==========================================
+// 3. FUNGSI READ REAL-TIME DARI FIRESTORE
+// ==========================================
+rsvpRef.orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
+    guestbook.innerHTML = '';
+
+    if (snapshot.empty) {
+        guestbook.innerHTML = '<p class="text-xs text-gray-400 text-center italic py-4">Belum ada ucapan. Jadilah yang pertama memberikan doa!</p>';
+        return;
+    }
+
+    snapshot.forEach((doc) => {
+        const data = doc.data();
+        
+        // Atur badge warna kehadiran
+        const isHadir = data.attendance === 'Hadir';
+        const badgeStyle = isHadir 
+            ? 'bg-green-100 text-green-700 border-green-200' 
+            : 'bg-red-100 text-red-700 border-red-200';
+
+        const card = document.createElement('div');
+        card.className = "p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-sky-blue/30 shadow-sm animate__animated animate__fadeInUp mb-3";
+        card.innerHTML = `
+            <div class="flex justify-between items-center mb-1.5">
+                <h5 class="font-bold text-sm text-theme-dark">${escapeHtml(data.name)}</h5>
+                <span class="text-[10px] px-2.5 py-0.5 rounded-full font-semibold border ${badgeStyle}">
+                    ${escapeHtml(data.attendance)}
+                </span>
+            </div>
+            <p class="text-xs text-gray-600 italic leading-relaxed">"${escapeHtml(data.message)}"</p>
+        `;
+
+        guestbook.appendChild(card);
+    });
+}, (error) => {
+    console.error("Gagal mengambil data real-time:", error);
+    guestbook.innerHTML = '<p class="text-xs text-red-400 text-center py-4">Gagal memuat ucapan. Pastikan Rules Firestore mengizinkan akses read.</p>';
+});
     </script>
 </body>
 </html>
