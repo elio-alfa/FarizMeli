@@ -404,8 +404,9 @@
             </div>
         </section>
 
+        /*
         <!-- RSVP & Guestbook -->
-        <section id="rsvp" class="py-20 px-6">
+        <section id="rsvp" class="hidden py-20 px-6">
             <div class="max-w-2xl mx-auto bg-white/90 p-8 md:p-12 rounded-[2rem] shadow-2xl border border-pink-blush">
                 <h2 class="font-serif text-3xl text-theme-dark text-center mb-8 italic">RSVP & Ucapan Doa</h2>
                 
@@ -441,6 +442,7 @@
                 <div id="guestbook" class="mt-12 space-y-4 max-h-96 overflow-y-auto pr-2 custom-scrollbar"></div>
             </div>
         </section>
+        
 
         <!-- Digital Kado / Amplop -->
         <section class="py-20 px-6 bg-gradient-theme/30 text-center">
@@ -723,7 +725,7 @@
                 });
             });
         }
-        
+        */
 
         // BACA DATA REAL-TIME DARI FIRESTORE
         if (guestbook) {
@@ -761,7 +763,7 @@
                 guestbook.innerHTML = '<p class="text-xs text-red-400 text-center py-4">Gagal memuat ucapan. Pastikan Rules Firestore mengizinkan akses read.</p>';
             });
         }
-        */
+        
     </script>
 </body>
 </html>
